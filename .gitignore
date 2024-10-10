@@ -2,3 +2,4 @@
 .direnv
 .idea/
 build/
+container-data/
