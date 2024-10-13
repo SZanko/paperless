@@ -4,7 +4,7 @@
 #
 docker run \
   --name openapi-gen \
-  -v ${PWD}:/local \
+  -v "${PWD}":/local \
   openapitools/openapi-generator-cli generate \
   -i /local/openapi.yaml \
   -g spring \
@@ -19,6 +19,6 @@ docker run \
   --additional-properties useJakartaEe=true \
   -o /tmp/out/
   
-docker cp openapi-gen:/tmp/out/ ./out/
+docker cp openapi-gen:/tmp/out/. .
 
 docker rm -f openapi-gen

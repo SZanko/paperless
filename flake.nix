@@ -41,6 +41,7 @@
                   packages = with pkgs; [ 
                     podman-compose
                     pgcli
+                    openapi-generator-cli
                   ];
 
                   enterShell = ''
