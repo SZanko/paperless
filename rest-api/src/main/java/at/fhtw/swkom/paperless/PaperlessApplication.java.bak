@@ -1,13 +1,13 @@
-package at.zanko.paperless_api;
+package at.fhtw.swkom.paperless;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PaperlessApiApplication {
+public class PaperlessApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PaperlessApiApplication.class, args);
+		SpringApplication.run(PaperlessApplication.class, args);
 	}
 
 }

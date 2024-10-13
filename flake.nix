@@ -39,7 +39,8 @@
 
                   # https://devenv.sh/reference/options/
                   packages = with pkgs; [ 
-                    podman-compose
+                    #podman-compose
+                    docker-compose
                     pgcli
                     openapi-generator-cli
                   ];

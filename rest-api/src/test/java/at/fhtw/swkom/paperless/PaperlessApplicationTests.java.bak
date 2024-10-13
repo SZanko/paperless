@@ -1,10 +1,10 @@
-package at.zanko.paperless_api;
+package at.fhtw.swkom.paperless;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PaperlessApiApplicationTests {
+class PaperlessApplicationTests {
 
 	@Test
 	void contextLoads() {

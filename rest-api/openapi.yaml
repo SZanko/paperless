@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: Paperless REST-Server
   contact:
@@ -18,11 +18,23 @@ paths:
             schema:
               type: object
               properties:
-                document:
+                author:
                   type: string
+                  nullable: false
+                title:
+                  type: string
+                  nullable: false
                 file:
                   type: string
+                  nullable: false
                   format: binary
+              required:
+                - author
+                - title
+                - file
+            encoding:
+              file:
+                contentType: application/pdf
       responses:
         200:
           description: "Document successfully uploaded."
@@ -39,6 +51,57 @@ paths:
             "application/json":
               schema:
                 $ref: '#/components/schemas/documents'
+  /api/documents/search:
+    get:
+      summary: "Retrieve list of documents which match the search input"
+      operationId: searchDocumentContent
+      responses:
+        200:
+          description: "Found documents which match the search input"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/documents'
+        204:
+          description: "No content found"
+
+  /api/documents/metadata/{documentId}:
+    put:
+      summary: "Updates the Metadata of a document"
+      operationId: updateMetaData
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The id of the document
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  nullable: false
+                title:
+                  type: string
+                  nullable: false
+              required:
+                - author
+                - title
+      responses:
+        404:
+          description: "Document does not exist with this id!"
+        200:
+          description: "Metadata updated successfully"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/document'
+
+
   /api/documents/{id}:
     get:
       summary: "Retrieve a document by id"
@@ -90,6 +153,12 @@ components:
           description: "The author of the document's contents"
         created:
           type: string
+        content:
+          type: string
+          description: "Content of the document"
+        path:
+          type: string
+          description: "File Path"
       required:
         - title
     documents:

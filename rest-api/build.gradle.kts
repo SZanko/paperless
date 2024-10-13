@@ -6,7 +6,7 @@ plugins {
 	id("org.graalvm.buildtools.native") version "0.10.3"
 }
 
-group = "at.zanko"
+group = "at.fhtw.swkom"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -41,6 +41,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.amqp:spring-rabbit-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 }
 
 hibernate {
