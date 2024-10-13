@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("document")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-13T20:59:56.490961366Z[Etc/UTC]", comments = "Generator version: 7.10.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-14T00:54:41.659777437+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
 public class Document {
 
   private Integer id;
@@ -30,6 +30,10 @@ public class Document {
   private String author;
 
   private String created;
+
+  private String content;
+
+  private String path;
 
   public Document() {
     super();
@@ -50,7 +54,7 @@ public class Document {
   /**
    * The id of the document
    * @return id
-   */
+  */
   
   @Schema(name = "id", description = "The id of the document", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
@@ -70,7 +74,7 @@ public class Document {
   /**
    * The title of the document
    * @return title
-   */
+  */
   @NotNull 
   @Schema(name = "title", description = "The title of the document", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("title")
@@ -90,7 +94,7 @@ public class Document {
   /**
    * The author of the document's contents
    * @return author
-   */
+  */
   
   @Schema(name = "author", description = "The author of the document's contents", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("author")
@@ -110,7 +114,7 @@ public class Document {
   /**
    * Get created
    * @return created
-   */
+  */
   
   @Schema(name = "created", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("created")
@@ -120,6 +124,46 @@ public class Document {
 
   public void setCreated(String created) {
     this.created = created;
+  }
+
+  public Document content(String content) {
+    this.content = content;
+    return this;
+  }
+
+  /**
+   * Content of the document
+   * @return content
+  */
+  
+  @Schema(name = "content", description = "Content of the document", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Document path(String path) {
+    this.path = path;
+    return this;
+  }
+
+  /**
+   * File Path
+   * @return path
+  */
+  
+  @Schema(name = "path", description = "File Path", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("path")
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
   }
 
   @Override
@@ -134,12 +178,14 @@ public class Document {
     return Objects.equals(this.id, document.id) &&
         Objects.equals(this.title, document.title) &&
         Objects.equals(this.author, document.author) &&
-        Objects.equals(this.created, document.created);
+        Objects.equals(this.created, document.created) &&
+        Objects.equals(this.content, document.content) &&
+        Objects.equals(this.path, document.path);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, author, created);
+    return Objects.hash(id, title, author, created, content, path);
   }
 
   @Override
@@ -150,6 +196,8 @@ public class Document {
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    path: ").append(toIndentedString(path)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
 	java
 	id("org.springframework.boot") version "3.3.4"
@@ -19,6 +21,10 @@ configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
 	}
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+	imageName.set("fhtw.at/swkom/${project.name}")
 }
 
 repositories {

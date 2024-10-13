@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   contact:
     name: Bernhard Wallisch
@@ -14,6 +14,10 @@ paths:
       requestBody:
         content:
           multipart/form-data:
+            encoding:
+              file:
+                contentType: application/pdf
+                style: form
             schema:
               $ref: '#/components/schemas/postDocument_request'
       responses:
@@ -36,6 +40,51 @@ paths:
                 $ref: '#/components/schemas/documents'
           description: Success
       summary: Return a list of documents
+      x-accepts:
+      - application/json
+  /api/documents/search:
+    get:
+      operationId: searchDocumentContent
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/documents'
+          description: Found documents which match the search input
+        "204":
+          description: No content found
+      summary: Retrieve list of documents which match the search input
+      x-accepts:
+      - application/json
+  /api/documents/metadata/{documentId}:
+    put:
+      operationId: updateMetaData
+      parameters:
+      - description: The id of the document
+        explode: false
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/updateMetaData_request'
+      responses:
+        "404":
+          description: Document does not exist with this id!
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+          description: Metadata updated successfully
+      summary: Updates the Metadata of a document
+      x-content-type: multipart/form-data
       x-accepts:
       - application/json
   /api/documents/{id}:
@@ -85,10 +134,12 @@ components:
   schemas:
     document:
       example:
+        path: path
         author: author
         created: created
         id: 0
         title: title
+        content: content
       properties:
         id:
           description: The id of the document
@@ -101,16 +152,45 @@ components:
           type: string
         created:
           type: string
+        content:
+          description: Content of the document
+          type: string
+        path:
+          description: File Path
+          type: string
       required:
       - title
+      type: object
     documents:
       items:
         $ref: '#/components/schemas/document'
       type: array
     postDocument_request:
       properties:
-        document:
+        author:
+          nullable: false
+          type: string
+        title:
+          nullable: false
           type: string
         file:
           format: binary
+          nullable: false
           type: string
+      required:
+      - author
+      - file
+      - title
+      type: object
+    updateMetaData_request:
+      properties:
+        author:
+          nullable: false
+          type: string
+        title:
+          nullable: false
+          type: string
+      required:
+      - author
+      - title
+      type: object

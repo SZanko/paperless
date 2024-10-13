@@ -1,0 +1,262 @@
+!at.fhtw.swkom.exercisechecker.model.Assignment
+assignmentName: Sprint1
+courseName: SWKOM
+tasks: 
+- !Task
+   className: CheckRepoUrlValid
+   maxGrade: 10.0
+   title: 1.1 Provided Submission / Git Repo
+   withGrading: true
+- !Task
+   className: CheckRepoClone
+   maxGrade: 10.0
+   parameters: 
+   - !Param
+      name: overwriteExisting
+      value: true
+   title: 1.2 Extracted ZIP / Git clone
+   withGrading: true
+- !Task
+   className: CheckMavenBuild
+   maxGrade: 10.0
+   parameters: 
+   - !Param
+      name: skipTests
+      value: true
+   - !Param
+      name: rebuildExisting
+      value: false
+   title: 2. Application Build ok (without tests)
+   withGrading: true
+- !Task
+   className: CheckSourceFiles
+   maxGrade: 4.0
+   parameters: 
+   - !Param
+      name: setRootPath
+      value: /
+   - !Param
+      name: selectFile
+      value: pom.xml
+   - !Param
+      name: containsText
+      value: <artifactId>spring-boot-starter-parent</artifactId>
+   - !Param
+      name: containsText
+      value: <artifactId>spring-boot-maven-plugin</artifactId>
+   - !Param
+      name: containsText
+      value: <artifactId>spring-boot-starter-web</artifactId>
+   title: '3.2 Static File Checks: pom.xml'
+   withGrading: true
+- !Task
+   className: CheckSourceFiles
+   maxGrade: 16.0
+   parameters: 
+   - !Param
+      name: sourceCheckPackageAbsent
+      value: org.openapitools
+   - !Param
+      name: sourceCheckPackagePresent
+      value: at.fhtw.swkom.paperless.config
+   - !Param
+      name: sourceCheckPackagePresent
+      value: at.fhtw.swkom.paperless.controller
+   - !Param
+      name: sourceCheckPackagePresent
+      value: at.fhtw.swkom.paperless.services
+   - !Param
+      name: sourceCheckPackagePresent
+      value: at.fhtw.swkom.paperless.services.dto
+   - !Param
+      name: sourceCheckFileAbsent
+      value: at/fhtw/swkom/paperless/controller/ApiApiController.java
+   - !Param
+      name: sourceCheckFilePresent
+      value: at/fhtw/swkom/paperless/services/dto/Document.java
+   - !Param
+      name: sourceCheckFileAbsent
+      value: at/fhtw/swkom/paperless/services/OpenApiGeneratorApplication.java
+   title: '3.1 Static File Checks: *.java'
+   withGrading: true
+- !Task
+   className: CheckSourceFiles
+   maxGrade: 20.0
+   parameters: 
+   - !Param
+      name: setRootPath
+      value: /src/main/java
+   - !Param
+      name: selectFileContainsText
+      value: '@SpringBootApplication'
+   - !Param
+      name: containsText
+      value: package at.fhtw.swkom.paperless;
+   - !Param
+      name: containsText
+      value: public static void main(String[] args)
+   - !Param
+      name: selectFileContainsText
+      value: '"/api/documents'
+   - !Param
+      name: containsText
+      value: package at.fhtw.swkom.paperless.controller
+   - !Param
+      name: containsText
+      value: ' postDocument('
+   - !Param
+      name: containsText
+      value: ' getDocuments('
+   - !Param
+      name: containsText
+      value: ' getDocument('
+   - !Param
+      name: containsText
+      value: ' updateDocument('
+   - !Param
+      name: containsText
+      value: ' deleteDocument('
+   - !Param
+      name: selectFileContainsText
+      value: public class Document
+   - !Param
+      name: containsText
+      value: ' String title'
+   title: 3.2 Static Sourcecode Checks
+   withGrading: true
+- !Task
+   className: CheckMavenBuild
+   maxGrade: 10.0
+   parameters: 
+   - !Param
+      name: skipTests
+      value: false
+   - !Param
+      name: rebuildExisting
+      value: false
+   title: 4. Application Tests ok (Spring Boot Context)
+   withGrading: true
+- !Task
+   className: CheckMavenBuild
+   maxGrade: 3.0
+   parameters: 
+   - !Param
+      name: goal
+      value: spring-boot:start
+   - !Param
+      name: skipTests
+      value: true
+   - !Param
+      name: rebuildExisting
+      value: false
+   title: 5. Module-Tests (Start Spring Boot server)
+   withGrading: true
+- !Task
+   className: CheckHttpRequest
+   maxGrade: 3.0
+   parameters: 
+   - !Param
+      name: requestMethod
+      value: POST
+   - !Param
+      name: requestEndpoint
+      value: /api/documents/post_document
+   - !Param
+      name: requestHeader
+      value: 'Content-Type: multipart/form-data; boundary=my-custom-boundary'
+   - !Param
+      name: requestContentString
+      value: |
+         --my-custom-boundary
+         Content-Disposition: form-data; name="document"
+         Content-Type: application/text
+
+         Hello World!
+         --my-custom-boundary--
+
+   - !Param
+      name: responseStatusCodePattern
+      value: (2[0-9]{2}|4[0-9]{2})
+   title: 5.1 POST http://localhost:8081/api/documents/post_document
+   withGrading: true
+- !Task
+   className: CheckHttpRequest
+   maxGrade: 3.0
+   parameters: 
+   - !Param
+      name: requestMethod
+      value: GET
+   - !Param
+      name: requestEndpoint
+      value: /api/documents
+   - !Param
+      name: responseStatusCodePattern
+      value: (2[0-9]{2})
+   title: 5.2 GET http://localhost:8081/api/documents
+   withGrading: true
+- !Task
+   className: CheckHttpRequest
+   maxGrade: 3.0
+   parameters: 
+   - !Param
+      name: requestMethod
+      value: GET
+   - !Param
+      name: requestEndpoint
+      value: /api/documents/1
+   - !Param
+      name: responseStatusCodePattern
+      value: (2[0-9]{2})
+   title: 5.3 GET http://localhost:8081/api/documents/1
+   withGrading: true
+- !Task
+   className: CheckHttpRequest
+   maxGrade: 3.0
+   parameters: 
+   - !Param
+      name: requestMethod
+      value: PUT
+   - !Param
+      name: requestEndpoint
+      value: /api/documents/1
+   - !Param
+      name: requestHeader
+      value: 'Content-Type: application/json;charset=UTF-8'
+   - !Param
+      name: requestContentString
+      value: '{ "id" : 1, "title" : "Updated title of document" }'
+   - !Param
+      name: responseStatusCodePattern
+      value: (2[0-9]{2})
+   title: 5.4 PUT http://localhost:8081/api/documents/1
+   withGrading: true
+- !Task
+   className: CheckHttpRequest
+   maxGrade: 3.0
+   parameters: 
+   - !Param
+      name: requestMethod
+      value: DELETE
+   - !Param
+      name: requestEndpoint
+      value: /api/documents/1
+   - !Param
+      name: responseStatusCodePattern
+      value: (2[0-9]{2})
+   title: 5.5 DELETE http://localhost:8081/api/documents/1
+   withGrading: true
+- !Task
+   className: CheckMavenBuild
+   maxGrade: 2.0
+   parameters: 
+   - !Param
+      name: goal
+      value: spring-boot:stop
+   - !Param
+      name: skipTests
+      value: true
+   - !Param
+      name: rebuildExisting
+      value: false
+   title: 5. Module-Tests done (Stop Spring Boot server)
+   withGrading: true

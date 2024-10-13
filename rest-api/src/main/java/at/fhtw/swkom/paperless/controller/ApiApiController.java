@@ -1,7 +1,5 @@
 package at.fhtw.swkom.paperless.controller;
 
-import at.fhtw.swkom.paperless.services.dto.Document;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-13T20:59:56.490961366Z[Etc/UTC]", comments = "Generator version: 7.10.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-13T22:09:11.446025358Z[Etc/UTC]", comments = "Generator version: 7.10.0-SNAPSHOT")
 @Controller
 @RequestMapping("${openapi.paperlessRESTServer.base-path:}")
 public class ApiApiController implements ApiApi {

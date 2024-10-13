@@ -1,0 +1,167 @@
+openapi: 3.0.3
+info:
+  title: Paperless REST-Server
+  contact:
+    name: Bernhard Wallisch
+    url: https://www.technikum-wien.at/personal/bernhard-wallisch/
+  version: 1.0.0
+servers:
+  - url: 'localhost:8081'
+paths:
+  /api/documents/post_document:
+    post:
+      summary: "Upload a document"
+      operationId: postDocument
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  nullable: false
+                title:
+                  type: string
+                  nullable: false
+                file:
+                  type: string
+                  nullable: false
+                  format: binary
+              required:
+                - author
+                - title
+                - file
+            encoding:
+              file:
+                contentType: application/pdf
+      responses:
+        200:
+          description: "Document successfully uploaded."
+        400:
+          description: "Document upload failed due to bad request!"
+  /api/documents:
+    get:
+      summary: "Return a list of documents"
+      operationId: getDocuments
+      responses:
+        200:
+          description: "Success"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/documents'
+  /api/documents/search:
+    get:
+      summary: "Retrieve list of documents which match the search input"
+      operationId: searchDocumentContent
+      responses:
+        200:
+          description: "Found documents which match the search input"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/documents'
+        204:
+          description: "No content found"
+
+  /api/documents/metadata/{documentId}:
+    put:
+      summary: "Updates the Metadata of a document"
+      operationId: updateMetaData
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The id of the document
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  nullable: false
+                title:
+                  type: string
+                  nullable: false
+              required:
+                - author
+                - title
+      responses:
+        404:
+          description: "Document does not exist with this id!"
+        200:
+          description: "Metadata updated successfully"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/document'
+
+
+  /api/documents/{id}:
+    get:
+      summary: "Retrieve a document by id"
+      operationId: getDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The id of the document
+      responses:
+        200:
+          description: "Success"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/document'
+        404:
+          description: "Document does not exist with this id!"
+    delete:
+      summary: "Delete a document by id"
+      operationId: deleteDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The id of the document
+      responses:
+        204:
+          description: "Document deleted successfully"
+        404:
+          description: "Document does not exist with this id!"
+components:
+  schemas:
+    document:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The id of the document"
+        title:
+          type: string
+          description: "The title of the document"
+        author:
+          type: string
+          description: "The author of the document's contents"
+        created:
+          type: string
+        content:
+          type: string
+          description: "Content of the document"
+        path:
+          type: string
+          description: "File Path"
+      required:
+        - title
+    documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/document'
