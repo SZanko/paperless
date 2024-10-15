@@ -20,20 +20,20 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("document")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-14T00:54:41.659777437+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-14T01:19:23.587606985+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
 public class Document {
 
-  private Integer id;
+  private Optional<Integer> id = Optional.empty();
 
   private String title;
 
-  private String author;
+  private Optional<String> author = Optional.empty();
 
-  private String created;
+  private Optional<String> created = Optional.empty();
 
-  private String content;
+  private Optional<String> content = Optional.empty();
 
-  private String path;
+  private Optional<String> path = Optional.empty();
 
   public Document() {
     super();
@@ -47,7 +47,7 @@ public class Document {
   }
 
   public Document id(Integer id) {
-    this.id = id;
+    this.id = Optional.of(id);
     return this;
   }
 
@@ -58,11 +58,11 @@ public class Document {
   
   @Schema(name = "id", description = "The id of the document", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
-  public Integer getId() {
+  public Optional<Integer> getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Optional<Integer> id) {
     this.id = id;
   }
 
@@ -87,7 +87,7 @@ public class Document {
   }
 
   public Document author(String author) {
-    this.author = author;
+    this.author = Optional.of(author);
     return this;
   }
 
@@ -98,16 +98,16 @@ public class Document {
   
   @Schema(name = "author", description = "The author of the document's contents", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("author")
-  public String getAuthor() {
+  public Optional<String> getAuthor() {
     return author;
   }
 
-  public void setAuthor(String author) {
+  public void setAuthor(Optional<String> author) {
     this.author = author;
   }
 
   public Document created(String created) {
-    this.created = created;
+    this.created = Optional.of(created);
     return this;
   }
 
@@ -118,16 +118,16 @@ public class Document {
   
   @Schema(name = "created", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("created")
-  public String getCreated() {
+  public Optional<String> getCreated() {
     return created;
   }
 
-  public void setCreated(String created) {
+  public void setCreated(Optional<String> created) {
     this.created = created;
   }
 
   public Document content(String content) {
-    this.content = content;
+    this.content = Optional.of(content);
     return this;
   }
 
@@ -138,16 +138,16 @@ public class Document {
   
   @Schema(name = "content", description = "Content of the document", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("content")
-  public String getContent() {
+  public Optional<String> getContent() {
     return content;
   }
 
-  public void setContent(String content) {
+  public void setContent(Optional<String> content) {
     this.content = content;
   }
 
   public Document path(String path) {
-    this.path = path;
+    this.path = Optional.of(path);
     return this;
   }
 
@@ -158,11 +158,11 @@ public class Document {
   
   @Schema(name = "path", description = "File Path", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("path")
-  public String getPath() {
+  public Optional<String> getPath() {
     return path;
   }
 
-  public void setPath(String path) {
+  public void setPath(Optional<String> path) {
     this.path = path;
   }
 

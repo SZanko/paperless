@@ -12,4 +12,6 @@ openapi-generator-cli generate \
 --additional-properties basePackage=at.fhtw.swkom.paperless.services \
 --additional-properties useSpringBoot3=true \
 --additional-properties useJakartaEe=true \
+--additional-properties title=PaperlessRest \
+--additional-properties useOptional=true \
 -o .
