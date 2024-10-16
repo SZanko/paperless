@@ -1,0 +1,4 @@
+module at.fhtw.swkom.paperless.api.test {
+    requires org.junit.jupiter.api;
+    requires spring.boot.test;
+}

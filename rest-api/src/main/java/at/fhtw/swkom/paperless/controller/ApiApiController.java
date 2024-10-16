@@ -1,6 +1,7 @@
 package at.fhtw.swkom.paperless.controller;
 
 
+import at.fhtw.swkom.paperless.services.dto.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,4 +42,34 @@ public class ApiApiController implements ApiApi {
         return Optional.ofNullable(request);
     }
 
+
+    @Override
+    public ResponseEntity<Void> deleteDocument(Integer id) {
+        return ApiApi.super.deleteDocument(id);
+    }
+
+    @Override
+    public ResponseEntity<Document> getDocument(Integer id) {
+        return ApiApi.super.getDocument(id);
+    }
+
+    @Override
+    public ResponseEntity<List<Document>> getDocuments() {
+        return ApiApi.super.getDocuments();
+    }
+
+    @Override
+    public ResponseEntity<Void> postDocument(String author, String title, MultipartFile file) {
+        return ApiApi.super.postDocument(author, title, file);
+    }
+
+    @Override
+    public ResponseEntity<List<Document>> searchDocumentContent() {
+        return ApiApi.super.searchDocumentContent();
+    }
+
+    @Override
+    public ResponseEntity<Document> updateMetaData(Integer documentId, String author, String title) {
+        return ApiApi.super.updateMetaData(documentId, author, title);
+    }
 }

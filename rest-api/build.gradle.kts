@@ -5,7 +5,8 @@ plugins {
 	id("org.springframework.boot") version "3.3.4"
 	id("io.spring.dependency-management") version "1.1.6"
 	id("org.hibernate.orm") version "6.5.3.Final"
-	id("org.graalvm.buildtools.native") version "0.10.3"
+	id("io.freefair.lombok") version "8.10.2"
+	//id("org.graalvm.buildtools.native") version "0.10.3"
 }
 
 group = "at.fhtw.swkom"
@@ -13,7 +14,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -49,6 +50,10 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+	implementation("jakarta.interceptor:jakarta.interceptor-api:2.2.0")
+	implementation("jakarta.enterprise:jakarta.enterprise.cdi-api:4.1.0")
+	compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
+
 }
 
 hibernate {

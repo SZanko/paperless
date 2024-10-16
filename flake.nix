@@ -31,15 +31,16 @@
               modules = [
                 {
                   languages.java.enable = true;
-                  languages.java.jdk.package = pkgs.zulu17;
+                  languages.java.jdk.package = pkgs.openjdk;
+                  languages.java.maven.enable = true;
                   languages.java.gradle.enable = true;
                   languages.java.gradle.package = pkgs.gradle;
                   difftastic.enable = true;
 
                   # https://devenv.sh/reference/options/
                   packages = with pkgs; [ 
-                    podman-compose
-                    #docker-compose
+                    #podman-compose
+                    docker-compose
                     pgcli
                     openapi-generator-cli
                   ];

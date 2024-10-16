@@ -35,16 +35,6 @@ services:
     networks:
       - paperless-network
 
-  rest-api:
-    image: fhtw.at/swkom/paperless-api:latest
-    depends_on:
-      - postgresql
-      - minio
-    ports:
-      - 8081:8081
-    networks:
-      - paperless-network
-
 networks:
   paperless-network:
     driver: bridge
