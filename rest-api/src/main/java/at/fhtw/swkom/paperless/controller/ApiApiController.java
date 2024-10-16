@@ -2,6 +2,7 @@ package at.fhtw.swkom.paperless.controller;
 
 
 import at.fhtw.swkom.paperless.services.dto.Document;
+import jakarta.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +33,9 @@ public class ApiApiController implements ApiApi {
 
     private final NativeWebRequest request;
 
-    @Autowired
+    private final Document exampleDocument = new Document();
+
+    @Inject
     public ApiApiController(NativeWebRequest request) {
         this.request = request;
     }
@@ -45,17 +48,30 @@ public class ApiApiController implements ApiApi {
 
     @Override
     public ResponseEntity<Void> deleteDocument(Integer id) {
-        return ApiApi.super.deleteDocument(id);
+        final Optional<Document> found = Optional.ofNullable(exampleDocument);
+        if(found.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
     public ResponseEntity<Document> getDocument(Integer id) {
-        return ApiApi.super.getDocument(id);
+        final Optional<Document> found = Optional.ofNullable(exampleDocument);
+        if(found.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(found.get());
     }
 
     @Override
     public ResponseEntity<List<Document>> getDocuments() {
-        return ApiApi.super.getDocuments();
+        final List<Document> found = List.of(exampleDocument);
+        if(found.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(found);
     }
 
     @Override

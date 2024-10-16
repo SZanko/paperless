@@ -57,36 +57,6 @@ paths:
       summary: Retrieve list of documents which match the search input
       x-accepts:
       - application/json
-  /api/documents/metadata/{documentId}:
-    put:
-      operationId: updateMetaData
-      parameters:
-      - description: The id of the document
-        explode: false
-        in: path
-        name: documentId
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/updateMetaData_request'
-      responses:
-        "404":
-          description: Document does not exist with this id!
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/document'
-          description: Metadata updated successfully
-      summary: Updates the Metadata of a document
-      x-content-type: multipart/form-data
-      x-accepts:
-      - application/json
   /api/documents/{id}:
     delete:
       operationId: deleteDocument
@@ -128,6 +98,35 @@ paths:
         "404":
           description: Document does not exist with this id!
       summary: Retrieve a document by id
+      x-accepts:
+      - application/json
+    put:
+      operationId: updateMetaData
+      parameters:
+      - description: The id of the document
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/updateMetaData_request'
+      responses:
+        "404":
+          description: Document does not exist with this id!
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+          description: Metadata updated successfully
+      summary: Updates the Metadata of a document
+      x-content-type: multipart/form-data
       x-accepts:
       - application/json
 components:

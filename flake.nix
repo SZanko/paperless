@@ -30,11 +30,17 @@
               inherit inputs pkgs;
               modules = [
                 {
-                  languages.java.enable = true;
-                  languages.java.jdk.package = pkgs.openjdk;
-                  languages.java.maven.enable = true;
-                  languages.java.gradle.enable = true;
-                  languages.java.gradle.package = pkgs.gradle;
+                  languages.python = {
+                    enable = true;
+                    package =pkgs.python312;
+                  };
+                  languages.java = {
+                    enable = true;
+                    jdk.package = pkgs.openjdk;
+                    maven.enable = true;
+                    gradle.enable = true;
+                    gradle.package = pkgs.gradle;
+                  };
                   difftastic.enable = true;
 
                   # https://devenv.sh/reference/options/
@@ -43,6 +49,7 @@
                     docker-compose
                     pgcli
                     openapi-generator-cli
+                    python312Packages.pyyaml
                   ];
 
                   enterShell = ''

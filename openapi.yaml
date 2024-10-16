@@ -65,43 +65,6 @@ paths:
         204:
           description: "No content found"
 
-  /api/documents/metadata/{documentId}:
-    put:
-      summary: "Updates the Metadata of a document"
-      operationId: updateMetaData
-      parameters:
-        - name: documentId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: The id of the document
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                author:
-                  type: string
-                  nullable: false
-                title:
-                  type: string
-                  nullable: false
-              required:
-                - author
-                - title
-      responses:
-        404:
-          description: "Document does not exist with this id!"
-        200:
-          description: "Metadata updated successfully"
-          content:
-            "application/json":
-              schema:
-                $ref: '#/components/schemas/document'
-
-
   /api/documents/{id}:
     get:
       summary: "Retrieve a document by id"
@@ -137,6 +100,41 @@ paths:
           description: "Document deleted successfully"
         404:
           description: "Document does not exist with this id!"
+
+    put:
+      summary: "Updates the Metadata of a document"
+      operationId: updateMetaData
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The id of the document
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  nullable: false
+                title:
+                  type: string
+                  nullable: false
+              required:
+                - author
+                - title
+      responses:
+        404:
+          description: "Document does not exist with this id!"
+        200:
+          description: "Metadata updated successfully"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/document'
 components:
   schemas:
     document:

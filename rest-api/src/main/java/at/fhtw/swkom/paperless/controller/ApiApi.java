@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-16T00:17:04.530921959+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-16T02:37:48.027248614+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "api", description = "the api API")
 public interface ApiApi {
@@ -219,9 +219,9 @@ public interface ApiApi {
 
 
     /**
-     * PUT /api/documents/metadata/{documentId} : Updates the Metadata of a document
+     * PUT /api/documents/{id} : Updates the Metadata of a document
      *
-     * @param documentId The id of the document (required)
+     * @param id The id of the document (required)
      * @param author  (required)
      * @param title  (required)
      * @return Document does not exist with this id! (status code 404)
@@ -239,13 +239,13 @@ public interface ApiApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/api/documents/metadata/{documentId}",
+        value = "/api/documents/{id}",
         produces = { "application/json" },
         consumes = { "multipart/form-data" }
     )
     
     default ResponseEntity<Document> updateMetaData(
-        @Parameter(name = "documentId", description = "The id of the document", required = true, in = ParameterIn.PATH) @PathVariable("documentId") Integer documentId,
+        @Parameter(name = "id", description = "The id of the document", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
         @Parameter(name = "author", description = "", required = true) @Valid @RequestParam(value = "author", required = true) String author,
         @Parameter(name = "title", description = "", required = true) @Valid @RequestParam(value = "title", required = true) String title
     ) {
