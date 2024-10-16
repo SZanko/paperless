@@ -100,7 +100,6 @@ paths:
           description: "Document deleted successfully"
         404:
           description: "Document does not exist with this id!"
-
     put:
       summary: "Updates the Metadata of a document"
       operationId: updateMetaData
@@ -123,9 +122,15 @@ paths:
                 title:
                   type: string
                   nullable: false
+                file:
+                  type: string
+                  nullable: false
+                  format: binary
               required:
-                - author
                 - title
+            encoding:
+              file:
+                contentType: application/pdf
       responses:
         404:
           description: "Document does not exist with this id!"

@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-16T02:37:48.027248614+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-16T14:45:41.998108992+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "api", description = "the api API")
 public interface ApiApi {
@@ -222,8 +222,9 @@ public interface ApiApi {
      * PUT /api/documents/{id} : Updates the Metadata of a document
      *
      * @param id The id of the document (required)
-     * @param author  (required)
      * @param title  (required)
+     * @param author  (optional)
+     * @param file  (optional)
      * @return Document does not exist with this id! (status code 404)
      *         or Metadata updated successfully (status code 200)
      */
@@ -246,8 +247,9 @@ public interface ApiApi {
     
     default ResponseEntity<Document> updateMetaData(
         @Parameter(name = "id", description = "The id of the document", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
-        @Parameter(name = "author", description = "", required = true) @Valid @RequestParam(value = "author", required = true) String author,
-        @Parameter(name = "title", description = "", required = true) @Valid @RequestParam(value = "title", required = true) String title
+        @Parameter(name = "title", description = "", required = true) @Valid @RequestParam(value = "title", required = true) String title,
+        @Parameter(name = "author", description = "") @Valid @RequestParam(value = "author", required = false) String author,
+        @Parameter(name = "file", description = "") @RequestPart(value = "file", required = false) MultipartFile file
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {

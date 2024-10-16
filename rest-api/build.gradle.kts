@@ -32,6 +32,12 @@ repositories {
 	mavenCentral()
 }
 
+val jakartaServlet = "6.1.0"
+val jakartaCdi= "4.1.0"
+val jacksonDatabind = "0.2.6"
+val springdoc = "2.6.0"
+val jakartaInterceptor = "2.2.0"
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -48,12 +54,11 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.amqp:spring-rabbit-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
-	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
-	implementation("jakarta.interceptor:jakarta.interceptor-api:2.2.0")
-	implementation("jakarta.enterprise:jakarta.enterprise.cdi-api:4.1.0")
-	compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
-
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdoc")
+	implementation("org.openapitools:jackson-databind-nullable:$jacksonDatabind")
+	implementation("jakarta.interceptor:jakarta.interceptor-api:$jakartaInterceptor")
+	implementation("jakarta.enterprise:jakarta.enterprise.cdi-api:$jakartaCdi")
+	compileOnly("jakarta.servlet:jakarta.servlet-api:$jakartaServlet")
 }
 
 hibernate {

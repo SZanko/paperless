@@ -85,7 +85,11 @@ public class ApiApiController implements ApiApi {
     }
 
     @Override
-    public ResponseEntity<Document> updateMetaData(Integer documentId, String author, String title) {
-        return ApiApi.super.updateMetaData(documentId, author, title);
+    public ResponseEntity<Document> updateMetaData(Integer id, String title, String author, MultipartFile file) {
+        final Optional<Document> found = Optional.ofNullable(exampleDocument);
+        if(found.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(found.get());
     }
 }

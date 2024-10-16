@@ -114,6 +114,10 @@ paths:
       requestBody:
         content:
           multipart/form-data:
+            encoding:
+              file:
+                contentType: application/pdf
+                style: form
             schema:
               $ref: '#/components/schemas/updateMetaData_request'
       responses:
@@ -189,7 +193,10 @@ components:
         title:
           nullable: false
           type: string
+        file:
+          format: binary
+          nullable: false
+          type: string
       required:
-      - author
       - title
       type: object
