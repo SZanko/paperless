@@ -9,13 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 class DocumentMapperTest {
     private final DocumentMapper documentMapper = new DocumentMapperImpl();
 
     @Test
     void convertEmptyDtoToModel(){
         Document dto = new Document();
+        dto.setPath(Optional.of("Path"));
         DocumentModel model = new DocumentModel();
+        model.setPath("Path");
         var result = documentMapper.toModel(dto);
         Assertions.assertThat(result).isEqualTo(model);
     }
@@ -23,7 +27,8 @@ class DocumentMapperTest {
     @Test
     void convertEmptyModelToDto(){
         Document dto = new Document();
-        DocumentModel model = new DocumentModel();
+        dto.setPath(Optional.of("Path"));
+        DocumentModel model = new DocumentModel("Path");
         var result = documentMapper.toDto(model);
         Assertions.assertThat(result).isEqualTo(dto);
     }
