@@ -7,7 +7,7 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: miniopasswd
     volumes:
-      - ./container-data/minio:/data
+      - ../container-data/minio:/data
     command: server /data --console-address ":9090"
     networks:
       - paperless-network
@@ -20,7 +20,7 @@ services:
       POSTGRES_USER: postgresqluser
       POSTGRES_PASSWORD: postgresqlpasswd
     volumes:
-      - ./container-data/postgresql:/var/lib/postgresql/data
+      - ../container-data/postgresql:/var/lib/postgresql/data
     networks:
       - paperless-network
   
