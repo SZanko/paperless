@@ -20,4 +20,7 @@ module at.fhtw.swkom.paperless.api {
     requires spring.boot;
     requires org.openapitools.jackson.nullable;
     requires spring.data.commons;
+    requires org.mapstruct;
+    requires static lombok;
+    requires jakarta.persistence;
 }

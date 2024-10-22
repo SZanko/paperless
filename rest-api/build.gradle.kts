@@ -28,15 +28,13 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	imageName.set("fhtw.at/swkom/${project.name}")
 }
 
-repositories {
-	mavenCentral()
-}
 
 val jakartaServlet = "6.1.0"
 val jakartaCdi= "4.1.0"
 val jacksonDatabind = "0.2.6"
 val springdoc = "2.6.0"
 val jakartaInterceptor = "2.2.0"
+val mapstruct = "1.6.0"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
@@ -59,6 +57,9 @@ dependencies {
 	implementation("jakarta.interceptor:jakarta.interceptor-api:$jakartaInterceptor")
 	implementation("jakarta.enterprise:jakarta.enterprise.cdi-api:$jakartaCdi")
 	compileOnly("jakarta.servlet:jakarta.servlet-api:$jakartaServlet")
+	implementation("org.mapstruct:mapstruct:$mapstruct")
+	annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct")
+	implementation("io.minio:minio:8.5.12")
 }
 
 hibernate {
@@ -69,4 +70,8 @@ hibernate {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+repositories {
+	mavenCentral()
+	mavenLocal()
 }
