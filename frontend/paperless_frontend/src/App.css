@@ -1,0 +1,15 @@
+/* App.css */
+html, body {
+  height: 100%;                     /* Ensure html and body occupy full height */
+  margin: 0;                        /* Remove default margins */
+}
+
+.App {
+  display: flex;
+  flex-direction: column;           /* Stacks children vertically */
+  justify-content: flex-start;      /* Aligns items to the top */
+  align-items: center;              /* Center aligns children horizontally */
+  min-height: 100vh;                /* Minimum height is the full viewport height */
+  background-color: #b8b9bb;        /* Light gray background color */
+  overflow: auto;
+}
