@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import './DocumentActions.css';
 
-
 export default function DocumentActions() {
     const [id, setId] = useState('');
     const [author, setAuthor] = useState('');
@@ -11,8 +10,19 @@ export default function DocumentActions() {
     const [searchQuery, setSearchQuery] = useState('');
 
     return (
-        <div>
+        <div className="document-actions-container">
+            <h2>Document Actions</h2>
 
+            <div className="action">
+                <h3>Get Document</h3>
+                <input
+                    type="text"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                    placeholder="Document ID"
+                />
+                <button>Fetch Document</button>
+            </div>
 
             <div className="action">
                 <h3>Get All Documents</h3>
@@ -51,6 +61,32 @@ export default function DocumentActions() {
                 <button>Upload Document</button>
             </div>
 
+            <div className="action">
+                <h3>Update Document</h3>
+                <input
+                    type="text"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                    placeholder="Document ID"
+                />
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="New Title"
+                />
+                <input
+                    type="text"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    placeholder="New Author"
+                />
+                <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                />
+                <button>Update Document</button>
+            </div>
 
             <div className="action">
                 <h3>Search Documents</h3>
