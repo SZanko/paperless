@@ -17,7 +17,7 @@ class DocumentMapperTest {
         Document dto = new Document();
         dto.setPath(Optional.of("Path"));
         DocumentModel model = new DocumentModel();
-        model.setPath("Path");
+        model.setFileNameBucket("Path");
         var result = documentMapper.toModel(dto);
         Assertions.assertThat(result).isEqualTo(model);
     }

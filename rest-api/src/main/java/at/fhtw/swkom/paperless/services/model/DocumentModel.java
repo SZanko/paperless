@@ -26,7 +26,7 @@ public class DocumentModel {
     private String created;
     private String content;
     @Nonnull
-    private String path;
+    private String fileNameBucket;
 
     @Override
     public final boolean equals(Object o) {

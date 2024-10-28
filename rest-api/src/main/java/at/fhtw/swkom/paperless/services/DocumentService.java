@@ -53,9 +53,9 @@ public class DocumentService {
 
 
     public Optional<Document> create(String author, String title, MultipartFile file) {
-        final String storageLocation;
+        final String fileNameBucket;
         try {
-            storageLocation = minioService.uploadFile(file);
+            fileNameBucket = minioService.uploadFile(file);
         } catch (IOException | ServerException | InsufficientDataException | ErrorResponseException |
                  NoSuchAlgorithmException | InvalidKeyException | InvalidResponseException | XmlParserException |
                  InternalException e) {
@@ -63,7 +63,7 @@ public class DocumentService {
             log.severe("Failed to upload document to minio");
             return Optional.empty();
         }
-        final DocumentModel toBeSaved = new DocumentModel(null, title, author, LocalDateTime.now().toString(), null, storageLocation);
+        final DocumentModel toBeSaved = new DocumentModel(null, title, author, LocalDateTime.now().toString(), null, fileNameBucket);
         documentRepository.save(toBeSaved);
         final Optional<DocumentModel> model = documentRepository.findById(toBeSaved.getId());
         return model.map(mapper::toDto);
