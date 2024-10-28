@@ -1,6 +1,7 @@
 package at.fhtw.swkom.paperless.mapper;
 
 import at.fhtw.swkom.paperless.services.mapper.DocumentMapper;
+import at.fhtw.swkom.paperless.services.mapper.DocumentMapperImpl;
 import at.fhtw.swkom.paperless.services.model.DocumentModel;
 import at.fhtw.swkom.paperless.services.dto.Document;
 import at.fhtw.swkom.paperless.services.dto.DocumentDtoBuilder;

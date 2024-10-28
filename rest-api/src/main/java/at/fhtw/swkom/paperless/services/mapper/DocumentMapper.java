@@ -19,7 +19,7 @@ public interface DocumentMapper extends OptionalMapStructHelper {
     @Mapping(source = "author", target = "author", qualifiedByName = "stringToOptional")
     @Mapping(source = "created", target = "created", qualifiedByName = "stringToOptional")
     @Mapping(source = "content", target = "content", qualifiedByName = "stringToOptional")
-    @Mapping(source = "fileNameBucket", target = "path", qualifiedByName = "stringToOptional")
+    @Mapping(source = "fileNameBucket", target = "minioFilePath", qualifiedByName = "stringToOptional")
     Document toDto(DocumentModel documentModel);
 
     default List<Document> toDto(List<DocumentModel> documentModels) {
@@ -30,7 +30,7 @@ public interface DocumentMapper extends OptionalMapStructHelper {
     @Mapping(source = "author", target = "author", qualifiedByName = "optionalToString")
     @Mapping(source = "created", target = "created", qualifiedByName = "optionalToString")
     @Mapping(source = "content", target = "content", qualifiedByName = "optionalToString")
-    @Mapping(source = "path", target = "fileNameBucket", qualifiedByName = "optionalToString")
+    @Mapping(source = "minioFilePath", target = "fileNameBucket", qualifiedByName = "optionalToString")
     DocumentModel toModel(Document document);
 
     default List<DocumentModel> toModel(List<Document> documents) {

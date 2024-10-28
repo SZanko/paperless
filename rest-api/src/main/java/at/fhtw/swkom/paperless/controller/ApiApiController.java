@@ -95,7 +95,7 @@ public class ApiApiController implements ApiApi {
         if(found.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        documentService.update();
+        //documentService.update();
         return ResponseEntity.ok(found.get());
     }
 }
