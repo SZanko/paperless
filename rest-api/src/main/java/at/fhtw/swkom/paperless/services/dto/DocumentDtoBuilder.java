@@ -54,7 +54,7 @@ public class DocumentDtoBuilder {
         document.setAuthor(this.author);
         document.setCreated(this.created);
         document.setContent(this.content);
-        document.setPath(this.path);
+        document.setMinioFilePath(this.path);
         return document;
     }
 }

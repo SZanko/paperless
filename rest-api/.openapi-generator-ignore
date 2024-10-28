@@ -22,5 +22,6 @@
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
 src/main/java/at/fhtw/swkom/paperless/controller/ApiApiController.java
+src/main/java/at/fhtw/swkom/paperless/services/OpenApiGeneratorApplication.java
 pom.xml
 src/main/resources/application.properties

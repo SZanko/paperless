@@ -44,6 +44,17 @@ public class DocumentService {
     }
 
     public void deleteById(@NotNull Integer id) {
+        final Optional<Document> model = this.findById(id);
+        if(model.isEmpty()) {
+            log.severe("Document was deleted before calling deleteById");
+            return;
+        }
+        if(model.get().getMinioFilePath().isEmpty()) {
+            log.warning("No File Uploaded");
+            documentRepository.deleteById(id);
+            return;
+        }
+        minioService.deleteFile(model.get().getMinioFilePath().get());
         documentRepository.deleteById(id);
     }
 

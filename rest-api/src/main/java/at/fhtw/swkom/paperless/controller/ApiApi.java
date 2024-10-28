@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-16T14:45:41.998108992+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-29T00:07:02.549448477+01:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "api", description = "the api API")
 public interface ApiApi {
@@ -98,7 +98,7 @@ public interface ApiApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"path\" : \"path\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }";
+                    String exampleString = "{ \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -135,7 +135,7 @@ public interface ApiApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"path\" : \"path\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }, { \"path\" : \"path\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" } ]";
+                    String exampleString = "[ { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }, { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -207,7 +207,7 @@ public interface ApiApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"path\" : \"path\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }, { \"path\" : \"path\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" } ]";
+                    String exampleString = "[ { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }, { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -254,7 +254,7 @@ public interface ApiApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"path\" : \"path\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }";
+                    String exampleString = "{ \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
