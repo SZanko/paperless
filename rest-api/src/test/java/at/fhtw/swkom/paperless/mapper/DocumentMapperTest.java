@@ -15,7 +15,7 @@ class DocumentMapperTest {
     @Test
     void convertEmptyDtoToModel(){
         Document dto = new Document();
-        dto.setPath(Optional.of("Path"));
+        dto.setMinioFilePath(Optional.of("Path"));
         DocumentModel model = new DocumentModel();
         model.setFileNameBucket("Path");
         var result = documentMapper.toModel(dto);
@@ -25,7 +25,7 @@ class DocumentMapperTest {
     @Test
     void convertEmptyModelToDto(){
         Document dto = new Document();
-        dto.setPath(Optional.of("Path"));
+        dto.setMinioFilePath(Optional.of("Path"));
         DocumentModel model = new DocumentModel("Path");
         var result = documentMapper.toDto(model);
         Assertions.assertThat(result).isEqualTo(dto);
