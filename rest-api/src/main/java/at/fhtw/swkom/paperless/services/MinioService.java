@@ -1,5 +1,8 @@
 package at.fhtw.swkom.paperless.services;
 
+import io.minio.MinioClient;
+import io.minio.ObjectWriteResponse;
+import io.minio.PutObjectArgs;
 import io.minio.*;
 import io.minio.errors.*;
 import jakarta.inject.Inject;
