@@ -42,6 +42,7 @@
                     gradle.package = pkgs.gradle;
                   };
                   difftastic.enable = true;
+                  dotenv.enable = true;
 
                   # https://devenv.sh/reference/options/
                   packages = with pkgs; [ 
@@ -50,9 +51,11 @@
                     pgcli
                     openapi-generator-cli
                     python312Packages.pyyaml
+                    minio
                   ];
 
                   enterShell = ''
+                    source ./.env
                     java --version
                   '';
 

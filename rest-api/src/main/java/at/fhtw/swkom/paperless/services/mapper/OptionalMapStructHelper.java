@@ -1,4 +1,4 @@
-package at.fhtw.swkom.paperless.mapper;
+package at.fhtw.swkom.paperless.services.mapper;
 
 import org.mapstruct.Named;
 

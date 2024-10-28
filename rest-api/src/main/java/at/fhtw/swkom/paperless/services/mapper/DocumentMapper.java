@@ -1,17 +1,19 @@
-package at.fhtw.swkom.paperless.mapper;
+package at.fhtw.swkom.paperless.services.mapper;
 
-import at.fhtw.swkom.paperless.model.DocumentModel;
+import at.fhtw.swkom.paperless.services.model.DocumentModel;
 import at.fhtw.swkom.paperless.services.dto.Document;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         builder = @Builder(disableBuilder = false))
+@Component
 public interface DocumentMapper extends OptionalMapStructHelper {
     @Mapping(source = "id", target = "id", qualifiedByName = "integerToOptional")
     @Mapping(source = "author", target = "author", qualifiedByName = "stringToOptional")

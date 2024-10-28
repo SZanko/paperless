@@ -1,13 +1,11 @@
 package at.fhtw.swkom.paperless.mapper;
 
-import at.fhtw.swkom.paperless.model.DocumentModel;
+import at.fhtw.swkom.paperless.services.mapper.DocumentMapper;
+import at.fhtw.swkom.paperless.services.model.DocumentModel;
 import at.fhtw.swkom.paperless.services.dto.Document;
 import at.fhtw.swkom.paperless.services.dto.DocumentDtoBuilder;
-import jakarta.inject.Inject;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
