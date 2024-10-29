@@ -38,7 +38,7 @@ class DocumentMapperTest {
                 .withId(null)
                 .withTitle("title")
                 .withContent("content")
-                .withPath("path")
+                .withMinioPath("path")
                 .build();
     }
 }

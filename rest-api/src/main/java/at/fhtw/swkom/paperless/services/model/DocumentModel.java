@@ -31,13 +31,9 @@ public class DocumentModel {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
-        if (this.getClass() != o.getClass()) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy hibernateProxy ? (hibernateProxy.getHibernateLazyInitializer().getPersistentClass()) : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy hibernateProxy ? (hibernateProxy.getHibernateLazyInitializer().getPersistentClass()) : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        DocumentModel that = (DocumentModel) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        if (!(o instanceof DocumentModel model)) return false;
+
+        return Objects.equals(id, model.id) && Objects.equals(title, model.title) && Objects.equals(author, model.author) && Objects.equals(created, model.created) && Objects.equals(content, model.content) && fileNameBucket.equals(model.fileNameBucket);
     }
 
     @Override

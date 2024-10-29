@@ -43,7 +43,7 @@ public class DocumentDtoBuilder {
         return this;
     }
 
-    public DocumentDtoBuilder withPath(String path) {
+    public DocumentDtoBuilder withMinioPath(String path) {
         this.path = Optional.ofNullable(path);
         return this;
     }
