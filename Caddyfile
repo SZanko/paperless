@@ -1,0 +1,6 @@
+:2015 {
+	root * ./frontend/paperless_frontend/build
+	file_server
+	encode gzip zstd
+	try_files {path} /index.html
+}
