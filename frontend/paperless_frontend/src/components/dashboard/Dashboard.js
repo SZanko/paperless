@@ -16,7 +16,6 @@ export default function Dashboard() {
     return (
         <div className="message-box">
             <h1>Dashboard</h1>
-            <p>{message}</p>
             <DocumentActions />
         </div>
     );
