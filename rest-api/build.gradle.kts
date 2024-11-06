@@ -35,6 +35,7 @@ val jacksonDatabind = "0.2.6"
 val springdoc = "2.6.0"
 val jakartaInterceptor = "2.2.0"
 val mapstruct = "1.6.0"
+val minio = "8.5.12"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
@@ -59,7 +60,7 @@ dependencies {
 	compileOnly("jakarta.servlet:jakarta.servlet-api:$jakartaServlet")
 	implementation("org.mapstruct:mapstruct:$mapstruct")
 	annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct")
-	implementation("io.minio:minio:8.5.12")
+	implementation("io.minio:minio:$minio")
 }
 
 hibernate {

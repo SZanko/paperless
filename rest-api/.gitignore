@@ -39,3 +39,5 @@ out/
 
 .attach_*
 target/
+/.run/
+.env
