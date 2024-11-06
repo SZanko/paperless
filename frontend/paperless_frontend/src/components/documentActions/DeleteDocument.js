@@ -7,7 +7,7 @@ export default function DeleteDocument() {
     const handleDelete = async (id) => {
 
         try {
-            const response = await fetch(`${BASE_URL}/api/documents/${id}`, {
+            const response = await fetch(`${BASE_URL}/documents/${id}`, {
                 method: 'DELETE',
             });
 
