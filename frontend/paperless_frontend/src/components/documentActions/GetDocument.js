@@ -2,18 +2,48 @@ import React, { useState } from 'react';
 
 export default function GetDocument() {
     const [id, setId] = useState('');
-    const [isFetchingAll, setIsFetchingAll] = useState(false);
 
-    const fetchDocument = () => {
-        // Implement the logic to fetch the document by ID
+    const fetchDocument = async (id) => {
+
+        try{
+            const response = await fetch(`http://localhost:8081/api/documents/${id}`,
+                {method: 'GET',
+        });
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(`Failed to fetch document: ${errorMessage}`);
+            }
+
+            const documentData = await response.json();
+            console.log('Document fetched successfully:', documentData);
+
+            return documentData;}
+        catch (error){
+            console.error('Error fetching document:', error);
+        }
         console.log(`Fetching document with ID: ${id}`);
-        // Add your fetch logic here
     };
 
-    const fetchAllDocuments = () => {
-        // Implement the logic to fetch all documents
+    const fetchAllDocuments = async () => {
         console.log('Fetching all documents');
-        // Add your fetch logic here
+
+        try {
+            const response = await fetch('http://localhost:8081/api/documents', {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(`Failed to fetch documents: ${errorMessage}`);
+            }
+
+            const documentsList = await response.json();
+            console.log('All documents fetched successfully:', documentsList);
+
+            return documentsList;
+        } catch (error) {
+            console.error('Error fetching documents:', error);
+        }
     };
 
     return (
@@ -26,7 +56,7 @@ export default function GetDocument() {
                     onChange={(e) => setId(e.target.value)}
                     placeholder="Document ID"
                 />
-                <button onClick={fetchDocument}>Fetch Document</button>
+                <button onClick={() => fetchDocument(id)}>Fetch Document</button>
             </div>
 
             <div className="get-all-documents">

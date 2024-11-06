@@ -174,7 +174,7 @@ public interface ApiApi {
         @Parameter(name = "title", description = "", required = true) @Valid @RequestParam(value = "title", required = true) String title,
         @Parameter(name = "file", description = "", required = true) @RequestPart(value = "file", required = true) MultipartFile file
     ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
