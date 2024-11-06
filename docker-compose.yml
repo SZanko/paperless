@@ -45,6 +45,18 @@ services:
     networks:
       - paperless-network
 
+  caddy:
+    image: caddy:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/paperless_frontend/build:/srv
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - rest-api
+    networks:
+      - paperless-network
+
 networks:
   paperless-network:
     driver: bridge
