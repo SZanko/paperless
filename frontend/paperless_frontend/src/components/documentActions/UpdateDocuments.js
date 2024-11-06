@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../config';
 
 export default function UpdateDocumentMetadata() {
     const [id, setId] = useState('');
@@ -6,8 +7,6 @@ export default function UpdateDocumentMetadata() {
     const [author, setAuthor] = useState('');
     const [file, setFile] = useState(null);
 
-    // API endpoint base URL
-    const baseURL = 'http://localhost:8081/api';
 
     const updateMetadata = async () => {
         const formData = new FormData();
@@ -16,7 +15,7 @@ export default function UpdateDocumentMetadata() {
         if (file) formData.append('file', file);
 
         try {
-            const response = await fetch(`${baseURL}/documents/${id}`, {
+            const response = await fetch(`${BASE_URL}/documents/${id}`, {
                 method: 'PUT',
                 body: formData,
             });
