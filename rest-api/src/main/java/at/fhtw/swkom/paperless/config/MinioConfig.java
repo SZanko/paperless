@@ -20,7 +20,7 @@ public class MinioConfig {
         return new MinioClient
                 .Builder()
                 .endpoint(endpoint)
-                .credentials(secretKey, accessKey)
+                .credentials(accessKey, secretKey)
                 .build();
     }
 }
