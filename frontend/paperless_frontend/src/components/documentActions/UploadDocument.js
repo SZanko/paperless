@@ -4,37 +4,30 @@ export default function UploadDocument() {
     const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
     const [file, setFile] = useState(null);
-    const [response, setResponse] = useState(null); // To display responses from API calls
 
-    const baseURL = 'http://localhost:8080/api';
+    const baseURL = 'http://rest-api:8081/api';
 
     // Upload a new document
     const uploadDocument = async () => {
-        if (!author || !title || !file) {
-            alert("Please fill in all fields and select a file.");
-            return;
-        }
-
         const formData = new FormData();
         formData.append("author", author);
         formData.append("title", title);
         formData.append("file", file);
 
         try {
-            const res = await fetch(`${baseURL}/document`, {
+            const response = await fetch('http://localhost:8081/api/documents/post_document', {
                 method: 'POST',
                 body: formData,
             });
 
-            if (!res.ok) {
-                throw new Error("Error uploading document");
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(`Error: ${errorMessage}`);
             }
 
-            const data = await res.json();
-            setResponse(data);
+            console.log('Upload successful');
         } catch (error) {
-            console.error(error);
-            setResponse({ error: error.message });
+            console.error('Upload failed:', error);
         }
     };
 
@@ -61,10 +54,6 @@ export default function UploadDocument() {
                 required
             />
             <button onClick={uploadDocument}>Upload Document</button>
-            <div className="response-container">
-                <h3>Response</h3>
-                <pre>{JSON.stringify(response, null, 2)}</pre>
-            </div>
         </div>
     );
 }
