@@ -5,6 +5,7 @@ import io.minio.ObjectWriteResponse;
 import io.minio.PutObjectArgs;
 import io.minio.*;
 import io.minio.errors.*;
+import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -29,9 +30,17 @@ public class MinioService {
     private String bucketName;
 
 
+    private String getValidFileName(@Nonnull MultipartFile file) {
+        if(file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
+            return file.getOriginalFilename();
+        }else {
+            return file.getName();
+        }
+    }
+
     public String uploadFile(MultipartFile file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         final int tenMB = 10 * 1024 * 1024;
-        final String newFileName = random.nextInt(tenMB) + "-" + file.getName();
+        final String newFileName = random.nextInt(tenMB) + "-" + getValidFileName(file);
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)

@@ -3,4 +3,7 @@
 .idea/
 .env
 build/
-container-data/
+bin/
+container-data/elasticSearch
+container-data/postgresql
+container-data/minio
