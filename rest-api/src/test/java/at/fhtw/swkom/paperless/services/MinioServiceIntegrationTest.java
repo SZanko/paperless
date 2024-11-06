@@ -38,11 +38,20 @@ class MinioServiceIntegrationTest {
         );
     }
 
+    private boolean compareFileNameAfterHyphen(String expected, String actual) {
+        int hyphenIndex = actual.indexOf('-');
+        if (hyphenIndex != -1) {
+            String actualAfterHyphen = actual.substring(hyphenIndex + 1);
+            return actualAfterHyphen.equals(expected);
+        }
+        return false;
+    }
+
     @Test
     void testUploadIntegrationTest() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         System.out.println(multipartFile.getOriginalFilename());
         final String savedAt = minioService.uploadFile(multipartFile);
 
-        Assertions.assertEquals("HelloWorld.pdf", savedAt);
+        Assertions.assertTrue(compareFileNameAfterHyphen("HelloWorld.pdf", savedAt));
     }
 }

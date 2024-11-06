@@ -29,12 +29,12 @@ public class MinioService {
 
     public String uploadFile(MultipartFile file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         final int tenMB = 10 * 1024 * 1024;
-        final String newFileName = random.nextInt(tenMB) + file.getOriginalFilename();
+        final String newFileName = random.nextInt(tenMB) + "-" + file.getName();
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)
-                        .object(file.getName())
-                        .contentType(newFileName)
+                        .object(newFileName)
+                        .contentType("application/pdf")
                         .stream(file.getInputStream(), -1, tenMB)
                         .build()
         );
