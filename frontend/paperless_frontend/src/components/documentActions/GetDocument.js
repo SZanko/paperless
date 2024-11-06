@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../config';
 
 export default function GetDocument() {
     const [id, setId] = useState('');
@@ -6,7 +7,7 @@ export default function GetDocument() {
     const fetchDocument = async (id) => {
 
         try{
-            const response = await fetch(`http://localhost:8081/api/documents/${id}`,
+            const response = await fetch(`${BASE_URL}/documents/${id}`,
                 {method: 'GET',
         });
             if (!response.ok) {
@@ -28,7 +29,7 @@ export default function GetDocument() {
         console.log('Fetching all documents');
 
         try {
-            const response = await fetch('http://localhost:8081/api/documents', {
+            const response = await fetch(`${BASE_URL}/documents`, {
                 method: 'GET',
             });
 

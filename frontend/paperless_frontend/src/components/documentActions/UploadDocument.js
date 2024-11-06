@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../config';
+
 
 export default function UploadDocument() {
     const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
     const [file, setFile] = useState(null);
 
-    const baseURL = 'http://rest-api:8081/api';
 
-    // Upload a new document
     const uploadDocument = async () => {
         const formData = new FormData();
         formData.append("author", author);
@@ -15,7 +15,7 @@ export default function UploadDocument() {
         formData.append("file", file);
 
         try {
-            const response = await fetch('http://localhost:8081/api/documents/post_document', {
+            const response = await fetch(`${BASE_URL}/documents/post_document`, {
                 method: 'POST',
                 body: formData,
             });

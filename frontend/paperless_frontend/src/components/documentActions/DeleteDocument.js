@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../config';
 
 export default function DeleteDocument() {
     const [id, setId] = useState('');
@@ -6,7 +7,7 @@ export default function DeleteDocument() {
     const handleDelete = async (id) => {
 
         try {
-            const response = await fetch(`http://localhost:8081/api/documents/${id}`, {
+            const response = await fetch(`${BASE_URL}/api/documents/${id}`, {
                 method: 'DELETE',
             });
 
