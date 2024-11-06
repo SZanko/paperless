@@ -1,12 +1,10 @@
 package at.fhtw.swkom.paperless.services;
 
-import io.minio.MinioClient;
-import io.minio.ObjectWriteResponse;
-import io.minio.PutObjectArgs;
-import io.minio.RemoveObjectArgs;
+import io.minio.*;
 import io.minio.errors.*;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 @Service
+@Log
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class MinioService {
 
@@ -46,8 +45,8 @@ public class MinioService {
 
         try {
             minioClient.removeObject(RemoveObjectArgs.builder()
-                            .bucket(bucketName)
-                            .object(fileNameInBucket)
+                    .bucket(bucketName)
+                    .object(fileNameInBucket)
                     .build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
                  InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException |
@@ -56,5 +55,20 @@ public class MinioService {
             //throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public boolean isObjectExist(String name) {
+        try {
+            minioClient.statObject(StatObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(name).build());
+            return true;
+        } catch (ErrorResponseException e) {
+            log.warning(e.getMessage());
+            return false;
+        } catch (Exception e) {
+            log.warning(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

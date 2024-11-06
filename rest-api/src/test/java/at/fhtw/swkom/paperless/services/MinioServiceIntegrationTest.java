@@ -39,7 +39,7 @@ class MinioServiceIntegrationTest {
     }
 
     private boolean compareFileNameAfterHyphen(String expected, String actual) {
-        int hyphenIndex = actual.indexOf('-');
+        final int hyphenIndex = actual.indexOf('-');
         if (hyphenIndex != -1) {
             String actualAfterHyphen = actual.substring(hyphenIndex + 1);
             return actualAfterHyphen.equals(expected);
@@ -49,9 +49,23 @@ class MinioServiceIntegrationTest {
 
     @Test
     void testUploadIntegrationTest() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        System.out.println(multipartFile.getOriginalFilename());
         final String savedAt = minioService.uploadFile(multipartFile);
 
         Assertions.assertTrue(compareFileNameAfterHyphen("HelloWorld.pdf", savedAt));
+    }
+
+    @Test
+    void testObjectExist() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        Assertions.assertFalse(minioService.isObjectExist("NotExisting.pdf"));
+        final String savedAt = minioService.uploadFile(multipartFile);
+        Assertions.assertTrue(minioService.isObjectExist(savedAt));
+    }
+
+    @Test
+    void testDeletionIntegrationTest() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        final String savedAt = minioService.uploadFile(multipartFile);
+
+        Assertions.assertTrue(minioService.deleteFile(savedAt));
+        Assertions.assertFalse(minioService.isObjectExist(savedAt));
     }
 }

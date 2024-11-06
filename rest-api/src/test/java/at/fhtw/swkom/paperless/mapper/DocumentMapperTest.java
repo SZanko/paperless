@@ -15,32 +15,32 @@ class DocumentMapperTest {
 
     @Test
     void convertEmptyDtoToModel(){
-        Document dto = new Document();
+        final Document dto = new Document();
         dto.setMinioFilePath(Optional.of("Path"));
-        DocumentModel model = new DocumentModel();
+        final DocumentModel model = new DocumentModel();
         model.setFileNameBucket("Path");
-        var result = documentMapper.toModel(dto);
+        final var result = documentMapper.toModel(dto);
         Assertions.assertThat(result).isEqualTo(model);
     }
 
     @Test
     void convertEmptyModelToDto(){
-        Document dto = new Document();
+        final Document dto = new Document();
         dto.setMinioFilePath(Optional.of("Path"));
-        DocumentModel model = new DocumentModel("Path");
-        var result = documentMapper.toDto(model);
+        final DocumentModel model = new DocumentModel("Path");
+        final var result = documentMapper.toDto(model);
         Assertions.assertThat(result).isEqualTo(dto);
     }
 
     @Test
     void convertDtoToModel() {
-        Document dto = DocumentDtoBuilder.builder()
+        final Document dto = DocumentDtoBuilder.builder()
                 .withId(null)
                 .withTitle("title")
                 .withContent("content")
                 .withMinioPath("path")
                 .build();
-        var result = documentMapper.toModel(dto);
+        final var result = documentMapper.toModel(dto);
         Assertions.assertThat(result.getId()).isNull();
         Assertions.assertThat(result.getTitle()).isEqualTo("title");
         Assertions.assertThat(result.getContent()).isEqualTo("content");
@@ -49,8 +49,8 @@ class DocumentMapperTest {
 
     @Test
     void convertModelToDto() {
-        DocumentModel model = new DocumentModel(null, "title", "author", "created", "content", "path");
-        var result = documentMapper.toDto(model);
+        final DocumentModel model = new DocumentModel(null, "title", "author", "created", "content", "path");
+        final var result = documentMapper.toDto(model);
         Assertions.assertThat(result.getId()).isEmpty();
         Assertions.assertThat(result.getTitle()).isEqualTo("title");
         Assertions.assertThat(result.getContent()).isNotEmpty();
