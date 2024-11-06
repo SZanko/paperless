@@ -1,29 +1,43 @@
-// src/components/UpdateDocument.js
 import React, { useState } from 'react';
 
-export default function UpdateDocument() {
+export default function UpdateDocumentMetadata() {
     const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [file, setFile] = useState(null);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+    // API endpoint base URL
+    const baseURL = 'http://localhost:8081/api';
 
-    const handleUpdate = () => {
-        // Placeholder for update logic
-        console.log(`Updating document ID: ${id}`);
-        console.log(`New Title: ${title}`);
-        console.log(`New Author: ${author}`);
-        if (file) {
-            console.log(`New File: ${file.name}`);
+    const updateMetadata = async () => {
+        const formData = new FormData();
+        formData.append('title', title);
+        if (author) formData.append('author', author);
+        if (file) formData.append('file', file);
+
+        try {
+            const response = await fetch(`${baseURL}/documents/${id}`, {
+                method: 'PUT',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(`Error: ${errorMessage}`);
+            }
+
+            const updatedDocument = await response.json();
+            console.log('Document updated successfully:', updatedDocument);
+
+        } catch (error) {
+            console.error('Error updating document:', error);
         }
     };
 
     return (
         <div className="action">
-            <h3>Update Document</h3>
+            <h3>Update Document Metadata</h3>
+
             <input
                 type="text"
                 value={id}
@@ -44,9 +58,9 @@ export default function UpdateDocument() {
             />
             <input
                 type="file"
-                onChange={handleFileChange}
+                onChange={(e) => setFile(e.target.files[0])}
             />
-            <button onClick={handleUpdate}>Update Document</button>
+            <button onClick={updateMetadata}>Update Document Metadata</button>
         </div>
     );
 }
