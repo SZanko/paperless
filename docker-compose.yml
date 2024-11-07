@@ -34,6 +34,17 @@ services:
     networks:
       - paperless-network
 
+  rabbitmq:
+    image: docker.io/library/rabbitmq:management-alpine
+    ports:
+      - "5672:5672"
+      - "9093:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq_user
+      RABBITMQ_DEFAULT_PASS: rabbitmq_passwd
+    networks:
+      - paperless-network
+
   rest-api:
     image: fhtw.at/swkom/paperless-api:latest
     depends_on:
@@ -44,7 +55,7 @@ services:
     networks:
       - paperless-network
 
-  caddy:
+  frontend:
     image: caddy:latest
     ports:
       - "8080:80"
