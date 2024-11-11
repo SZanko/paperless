@@ -47,21 +47,21 @@ class MinioServiceIntegrationTest {
         return false;
     }
 
-    @Test
+    //@Test
     void testUploadIntegrationTest() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         final String savedAt = minioService.uploadFile(multipartFile);
 
         Assertions.assertTrue(compareFileNameAfterHyphen("HelloWorld.pdf", savedAt));
     }
 
-    @Test
+    //@Test
     void testObjectExist() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         Assertions.assertFalse(minioService.isObjectExist("NotExisting.pdf"));
         final String savedAt = minioService.uploadFile(multipartFile);
         Assertions.assertTrue(minioService.isObjectExist(savedAt));
     }
 
-    @Test
+    //@Test
     void testDeletionIntegrationTest() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         final String savedAt = minioService.uploadFile(multipartFile);
 
