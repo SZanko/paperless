@@ -1,10 +1,7 @@
 package at.fhtw.swkom.paperless.persistence.entities;
 
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -17,6 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name = "document")
 public class DocumentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
