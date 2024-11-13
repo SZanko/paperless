@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("document")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-16T14:45:41.998108992+02:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-29T00:07:02.549448477+01:00[Europe/Vienna]", comments = "Generator version: 7.6.0")
 public class Document {
 
   private Optional<Integer> id = Optional.empty();
@@ -33,7 +33,7 @@ public class Document {
 
   private Optional<String> content = Optional.empty();
 
-  private Optional<String> path = Optional.empty();
+  private Optional<String> minioFilePath = Optional.empty();
 
   public Document() {
     super();
@@ -146,24 +146,24 @@ public class Document {
     this.content = content;
   }
 
-  public Document path(String path) {
-    this.path = Optional.of(path);
+  public Document minioFilePath(String minioFilePath) {
+    this.minioFilePath = Optional.of(minioFilePath);
     return this;
   }
 
   /**
    * File Path
-   * @return path
+   * @return minioFilePath
   */
   
-  @Schema(name = "path", description = "File Path", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("path")
-  public Optional<String> getPath() {
-    return path;
+  @Schema(name = "minioFilePath", description = "File Path", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("minioFilePath")
+  public Optional<String> getMinioFilePath() {
+    return minioFilePath;
   }
 
-  public void setPath(Optional<String> path) {
-    this.path = path;
+  public void setMinioFilePath(Optional<String> minioFilePath) {
+    this.minioFilePath = minioFilePath;
   }
 
   @Override
@@ -180,12 +180,12 @@ public class Document {
         Objects.equals(this.author, document.author) &&
         Objects.equals(this.created, document.created) &&
         Objects.equals(this.content, document.content) &&
-        Objects.equals(this.path, document.path);
+        Objects.equals(this.minioFilePath, document.minioFilePath);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, author, created, content, path);
+    return Objects.hash(id, title, author, created, content, minioFilePath);
   }
 
   @Override
@@ -197,7 +197,7 @@ public class Document {
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    path: ").append(toIndentedString(path)).append("\n");
+    sb.append("    minioFilePath: ").append(toIndentedString(minioFilePath)).append("\n");
     sb.append("}");
     return sb.toString();
   }

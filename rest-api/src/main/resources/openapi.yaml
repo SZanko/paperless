@@ -137,7 +137,7 @@ components:
   schemas:
     document:
       example:
-        path: path
+        minioFilePath: minioFilePath
         author: author
         created: created
         id: 0
@@ -158,7 +158,7 @@ components:
         content:
           description: Content of the document
           type: string
-        path:
+        minioFilePath:
           description: File Path
           type: string
       required:

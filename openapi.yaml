@@ -159,7 +159,7 @@ components:
         content:
           type: string
           description: "Content of the document"
-        path:
+        minioFilePath:
           type: string
           description: "File Path"
       required:
