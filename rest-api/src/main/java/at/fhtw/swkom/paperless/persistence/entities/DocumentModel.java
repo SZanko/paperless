@@ -1,4 +1,4 @@
-package at.fhtw.swkom.paperless.services.model;
+package at.fhtw.swkom.paperless.persistence.entities;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;

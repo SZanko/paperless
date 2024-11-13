@@ -1,22 +1,15 @@
 package at.fhtw.swkom.paperless.services;
 
-import at.fhtw.swkom.paperless.services.mapper.DocumentMapper;
+import at.fhtw.swkom.paperless.services.mappers.DocumentMapper;
 import at.fhtw.swkom.paperless.services.dto.Document;
-import at.fhtw.swkom.paperless.services.model.DocumentModel;
-import at.fhtw.swkom.paperless.services.repositories.DocumentRepository;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import at.fhtw.swkom.paperless.persistence.entities.DocumentModel;
+import at.fhtw.swkom.paperless.persistence.repositories.DocumentRepository;
 import io.minio.errors.*;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -13,7 +13,7 @@ services:
     networks:
       - paperless-network
 
-  postgresql:
+  db:
     image: docker.io/library/postgres:16.4-alpine
     ports:
       - "5432:5432"
@@ -28,7 +28,7 @@ services:
   adminer:
     image: docker.io/library/adminer
     depends_on:
-      - postgresql
+      - db
     ports:
       - "9091:8080"
     networks:

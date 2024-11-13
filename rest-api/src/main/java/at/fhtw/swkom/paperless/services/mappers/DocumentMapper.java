@@ -1,6 +1,6 @@
-package at.fhtw.swkom.paperless.services.mapper;
+package at.fhtw.swkom.paperless.services.mappers;
 
-import at.fhtw.swkom.paperless.services.model.DocumentModel;
+import at.fhtw.swkom.paperless.persistence.entities.DocumentModel;
 import at.fhtw.swkom.paperless.services.dto.Document;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
