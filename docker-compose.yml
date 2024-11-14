@@ -52,6 +52,9 @@ services:
       - minio
     ports:
       - 8081:8081
+    environment:
+      minioAccessKey: minioAccessKey
+      minioSecretKey: minioSecretKey
     networks:
       - paperless-network
 
