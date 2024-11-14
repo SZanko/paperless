@@ -2,6 +2,7 @@ package at.fhtw.swkom.paperless.persistence.entities;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -24,6 +25,7 @@ public class DocumentModel {
     private String created;
     private String content;
     @Nonnull
+    @NotNull
     private String fileNameBucket;
 
     @Override
