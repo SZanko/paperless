@@ -44,7 +44,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>fhtw.at/swkom/${project.artifactId}</name>
+                        <name>fhtw.at/swkom/paperless-api</name>
                     </image>
                 </configuration>
             </plugin>
