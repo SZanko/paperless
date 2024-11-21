@@ -41,6 +41,12 @@
                     gradle.enable = true;
                     gradle.package = pkgs.gradle;
                   };
+                  languages.javascript = {
+                    enable = true;
+                  };
+                  languages.clojure = {
+                    enable = true;
+                  };
                   difftastic.enable = true;
                   dotenv.enable = true;
 
