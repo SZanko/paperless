@@ -1,6 +1,8 @@
 package at.fhtw.swkom.paperless.config;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +33,7 @@ public class RabbitMQConfig {
     //@Bean
     //public ConnectionFactory connectionFactory() {
     //    CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-    //    connectionFactory.setUsername("guest");
+    //    connectionFactory.setUsername("${rabbitmq.username}");
     //    connectionFactory.setPassword("guest");
     //    return connectionFactory;
     //}
