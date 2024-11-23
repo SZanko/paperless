@@ -21,7 +21,7 @@ public class MessageListener {
     private final ObjectMapper objectMapper;
     private final DocumentRepository documentRepository;
 
-    @RabbitListener(queues = "files.content")
+    @RabbitListener(queues = "${rabbitmq.ocrWorkerOutputQueue}")
     public void receiveFilename(String content) {
         final OCRMessage ocrMessage;
         try {

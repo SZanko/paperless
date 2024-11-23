@@ -34,6 +34,9 @@
                     enable = true;
                     package =pkgs.python312;
                   };
+                  languages.clojure = {
+                    enable = true;
+                  };
                   languages.java = {
                     enable = true;
                     jdk.package = pkgs.openjdk;
@@ -52,6 +55,7 @@
                     openapi-generator-cli
                     python312Packages.pyyaml
                     minio
+                    leiningen
                   ];
 
                   enterShell = ''
