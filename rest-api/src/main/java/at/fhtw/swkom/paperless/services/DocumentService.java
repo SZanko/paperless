@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,7 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final DocumentMapper mapper;
     private final MinioService minioService;
+    private final MessageSender messageSender;
 
 
     public Optional<Document> findById(@Nullable Integer id) {
@@ -61,6 +63,7 @@ public class DocumentService {
         final String fileNameBucket;
         try {
             fileNameBucket = minioService.uploadFile(file);
+            messageSender.sendToOCRWorker(fileNameBucket);
         } catch (IOException | ServerException | InsufficientDataException | ErrorResponseException |
                  NoSuchAlgorithmException | InvalidKeyException | InvalidResponseException | XmlParserException |
                  InternalException e) {
