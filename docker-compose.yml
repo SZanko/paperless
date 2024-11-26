@@ -20,6 +20,7 @@ services:
     environment:
       POSTGRES_USER: postgresql
       POSTGRES_PASSWORD: postgresql
+      POSTGRES_DATABASE: postgres
     volumes:
       - ./container-data/postgresql:/var/lib/postgresql/data
     networks:
@@ -30,7 +31,7 @@ services:
     depends_on: 
       - postgres-db
     ports:
-      - 9091:8080
+      - "9091:8080"
     networks:
       - paperless-network
 
@@ -50,11 +51,19 @@ services:
     depends_on:
       - postgres-db
       - minio
+      - rabbitmq
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
-      minioAccessKey: minioAccessKey
-      minioSecretKey: minioSecretKey
+      minioAccessKey: ${minioAccessKey}
+      minioSecretKey: ${minioSecretKey}
+      dbUrl: jdbc:postgresql://paperless-postgres-db-1:5432/postgres
+      dbPasswd: postgresql
+      dbUser: postgresql
+      minioEndpoint: http://paperless-minio-1:9000
+      RABBITMQ_DEFAULT_USER: rabbitmq_user
+      RABBITMQ_DEFAULT_PASS: rabbitmq_passwd
+      RABBITMQ_DEFAULT_HOST: paperless-rabbitmq-1
     networks:
       - paperless-network
 
@@ -72,4 +81,5 @@ services:
 
 networks:
   paperless-network:
+    #driver: host
     driver: bridge
