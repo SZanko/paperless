@@ -48,7 +48,7 @@ services:
   rest-api:
     image: fhtw.at/swkom/paperless-api:latest
     depends_on:
-      - postgresql
+      - postgres-db
       - minio
     ports:
       - 8081:8081
@@ -63,8 +63,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./frontend/paperless_frontend/build:/srv
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./frontend/build:/srv
+      - ./frontend/Caddyfile:/etc/caddy/Caddyfile
     depends_on:
       - rest-api
     networks:

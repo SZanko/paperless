@@ -46,9 +46,12 @@
                   };
                   languages.javascript = {
                     enable = true;
-                  };
-                  languages.clojure = {
-                    enable = true;
+                    bun = {
+                      enable = true;
+                      install.enable = true;
+                    };
+                    corepack.enable = true;
+                    npm.enable = true;
                   };
                   difftastic.enable = true;
                   dotenv.enable = true;

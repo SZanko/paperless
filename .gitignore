@@ -7,3 +7,7 @@ bin/
 container-data/elasticSearch
 container-data/postgresql
 container-data/minio
+frontend/node_modules
+
+*.zip
+.~lock.*

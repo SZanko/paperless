@@ -38,6 +38,7 @@ out/
 .openapi-generator/
 
 .attach_*
+hs_err_pid*
 target/
 /.run/
 .env
