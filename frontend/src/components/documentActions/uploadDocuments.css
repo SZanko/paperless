@@ -1,0 +1,11 @@
+.upload-form {
+    background-color: white;      /* White background for the form */
+    padding: 20px;                /* Add padding around the form */
+    border-radius: 8px;           /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+    max-width: 400px;             /* Optional: Set a maximum width for the form */
+    margin: 20px auto;            /* Center the form horizontally with some margin at the top */
+    display: flex;
+    flex-direction: column;       /* Stack the form elements vertically */
+    gap: 10px;                    /* Space between form elements */
+}

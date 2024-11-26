@@ -1,0 +1,9 @@
+.buttons-container {
+    padding: 5px;
+    gap: 10px;
+}
+
+.button {
+    padding-left: 2px;
+    padding-right: 2px;
+}

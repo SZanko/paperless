@@ -1,14 +1,19 @@
+.screen {
+    width: 100%;
+}
 
-.message-box {
+.dashboard-box {
     margin-top: 20px;
     padding: 20px;
-    width: 80%;
-    max-width: 600px;
+    width: 100%;              /* Make the width 100% */
+    max-width: 1200px;        /* Optional: Add a max-width to prevent it from becoming too wide on large screens */
     border: 1px solid #ddd;
     border-radius: 8px;
     text-align: center;
     background-color: #f9f9f9;
     box-sizing: border-box;
+    margin-left: auto;        /* Center the container horizontally */
+    margin-right: auto;
 }
 
 h1 {
@@ -18,4 +23,38 @@ h1 {
 p {
     font-size: 1.2em;
     color: #666;
+}
+
+.uploadButton {
+    position: absolute;  /* Position the upload button form in the top-right corner */
+    top: 20px;           /* Space from the top of the container */
+    right: 20px;         /* Space from the right of the container */
+    z-index: 1000;
+}
+
+.action button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+.action button:hover {
+    background-color: #0056b3;
+}
+
+.action input[type="text"],
+.action input[type="file"] {
+    width: 80%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -1,31 +1,35 @@
 import React, { useState } from 'react';
 import { BASE_URL } from '../../config';
+import "./getDocuments.css"
 
 export default function GetDocument() {
     const [id, setId] = useState('');
+    const [documentData, setDocumentData] = useState(null); // State to hold the fetched document data
+    const [documentsList, setDocumentsList] = useState([]); // State to hold the list of all documents
+    const [error, setError] = useState(null); // State to handle any errors
 
     const fetchDocument = async (id) => {
-
-        try{
-            const response = await fetch(`${BASE_URL}/documents/${id}`,
-                {method: 'GET',
-        });
+        setError(null); // Reset error before fetching
+        try {
+            const response = await fetch(`${BASE_URL}/documents/${id}`, {
+                method: 'GET',
+            });
             if (!response.ok) {
                 const errorMessage = await response.text();
                 throw new Error(`Failed to fetch document: ${errorMessage}`);
             }
 
-            const documentData = await response.json();
-            console.log('Document fetched successfully:', documentData);
-
-            return documentData;}
-        catch (error){
+            const document = await response.json();
+            setDocumentData(document); // Update the state with the fetched document data
+            console.log('Document fetched successfully:', document);
+        } catch (error) {
+            setError(error.message); // Set the error if there's a failure
             console.error('Error fetching document:', error);
         }
-        console.log(`Fetching document with ID: ${id}`);
     };
 
     const fetchAllDocuments = async () => {
+        setError(null); // Reset error before fetching
         console.log('Fetching all documents');
 
         try {
@@ -38,11 +42,11 @@ export default function GetDocument() {
                 throw new Error(`Failed to fetch documents: ${errorMessage}`);
             }
 
-            const documentsList = await response.json();
-            console.log('All documents fetched successfully:', documentsList);
-
-            return documentsList;
+            const documents = await response.json();
+            setDocumentsList(documents); // Update the state with the fetched documents list
+            console.log('All documents fetched successfully:', documents);
         } catch (error) {
+            setError(error.message); // Set the error if there's a failure
             console.error('Error fetching documents:', error);
         }
     };
@@ -57,13 +61,31 @@ export default function GetDocument() {
                     onChange={(e) => setId(e.target.value)}
                     placeholder="Document ID"
                 />
-                <button onClick={() => fetchDocument(id)}>Fetch Document</button>
+
+                {/* Wrapper div for buttons */}
+                <div className="buttons-container">
+                    <button onClick={() => fetchDocument(id)} className="button">Fetch Document</button>
+                    <button onClick={fetchAllDocuments} className="button">Fetch All Documents</button>
+                </div>
+
+                {documentData && (
+                    <div className="document-details">
+                        <h4>Document Details:</h4>
+                        <pre>{JSON.stringify(documentData, null, 2)}</pre>
+                    </div>
+                )}
+
+                {error && <div className="error-message">Error: {error}</div>}
             </div>
 
-            <div className="get-all-documents">
-                <h3>Get All Documents</h3>
-                <button onClick={fetchAllDocuments}>Fetch All Documents</button>
-            </div>
+            {documentsList.length > 0 && (
+                <div className="documents-list">
+                    <h4>All Documents:</h4>
+                    <pre>{JSON.stringify(documentsList, null, 2)}</pre>
+                </div>
+            )}
+
+            {error && <div className="error-message">Error: {error}</div>}
         </div>
     );
 }
