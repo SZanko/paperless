@@ -7,7 +7,7 @@
                  [com.novemberain/langohr "5.5.0"]
                  [clojurewerkz/elastisch "3.0.1"]
                  [minio-clj "0.2.2"]
-                 [org.clojars.scottxtra/clj-ocr "0.1.0-SNAPSHOT"]]
+                 [net.sourceforge.tess4j/tess4j "5.13.0"]]
   :main ^:skip-aot ocr-worker.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all

@@ -65,6 +65,7 @@
                     python312Packages.pyyaml
                     minio
                     leiningen
+                    tesseract
                   ];
 
                   enterShell = ''
