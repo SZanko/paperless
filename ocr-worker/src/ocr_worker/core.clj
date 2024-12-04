@@ -18,5 +18,5 @@
   [& args]
   (ocr-utils/get-lang-data "eng")
   (->>
-    (get-pdf-content "resources/HelloWorld.pdf")
+    (get-pdf-content "resources/HelloWorld.png")
     (println)))
