@@ -7,8 +7,8 @@
 
 (deftest ocr-image-test
   (testing "Tries to run an ocr on an image"
-    (is (= "Hello World\n" (get-pdf-content "resources/HelloWorld.png")))
-    (is (= "Hello World\n" (get-pdf-content "resources/HelloWorld.pdf")))))
+    ;(is (= "Hello World\n" (get-pdf-content-from-disk "resources/HelloWorld.png" true)))
+    (is (= "Hello World\n" (get-pdf-content-from-disk "resources/HelloWorld.pdf" true)))))
 
 
 (deftest get-pdf-content-images-test

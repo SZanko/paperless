@@ -4,14 +4,36 @@
             [clj-ocr.utils :as ocr-utils]
             [clojure.java.io :as io]
             [pdfboxing.text :as pdf-text]
-            [pdfboxing.common :as pdf-common])
-  (:import (java.io File)
+            [pdfboxing.common :as pdf-common]
+            [minio :as minio]
+            )
+  (:import (io.minio GetObjectArgs GetObjectResponse)
+           (java.io ByteArrayInputStream ByteArrayOutputStream File FileInputStream FileOutputStream)
+           (java.nio.file Files)
+           (java.nio.file.attribute FileAttribute)
            (javax.imageio ImageIO)
            (org.apache.pdfbox.pdmodel PDDocument)
            (org.apache.pdfbox.text PDFTextStripper)
            (org.apache.pdfbox.rendering ImageType PDFRenderer)
            (java.awt.image BufferedImage)
            (pdfboxing.common PDFDocument)))
+
+(defn get-env
+  "Retrieve an environment variable by name, or return the default value if not set."
+  [env-name default-value]
+  (or (System/getenv env-name) default-value))
+
+(def rabbitmq-default-user (get-env "RABBITMQ_DEFAULT_USER" "rabbitmq_user"))
+(def rabbitmq-default-passwd (get-env "RABBITMQ_DEFAULT_PASS" "rabbitmq_passwd"))
+(def rabbitmq-default-host (get-env "RABBITMQ_DEFAULT_HOST" "paperless-rabbitmq-1"))
+(def rabbitmq-queue-input "files.input")
+(def rabbitmq-queue-output "files.content")
+(def minio-endpoint (get-env "minioEndpoint" "http://localhost:9000"))
+(def minio-access-key (get-env "minioAccessKey" "accessKey"))
+(def minio-secret-key (get-env "minioSecretKey" "secretKey"))
+(def minio-bucket "default")
+(def minio-connection (minio/connect minio-endpoint minio-access-key minio-secret-key))
+
 
 (defn get-pdf-content-as-images
   "Get content of the pdf as image"
@@ -24,18 +46,35 @@
                 (.renderImageWithDPI renderer page-index 300 ImageType/RGB))
               (range num-pages))))))
 
+(defn get-pdf-content-from-disk
+  "Run an OCR scan on a file which is on the disk"
+  ([^String filename-on-disk]
+   (get-pdf-content-from-disk filename-on-disk true))      ; Default behavior: don't delete file
+  ([^String filename-on-disk delete-after?]
+   (try
+     (->> (if (pdf-common/is-pdf? filename-on-disk)
+            ;; Get a sequence of images for PDFs
+            (get-pdf-content-as-images filename-on-disk)
+            ;; Read a single image for non-PDFs
+            [(ImageIO/read filename-on-disk)])              ; Wrap in a sequence for consistent handling
+          (map #(ocr/do-ocr % (ocr/set-language "eng")))    ; Process each image
+          (apply str))                                      ; Combine OCR results into a single string
+     (finally
+       (when (and delete-after? (.exists (io/file filename-on-disk)))
+         (.delete (io/file filename-on-disk)))))))
 
-(defn get-pdf-content
-  "Run an OCR scan on a file"
-  [^String filename]
-  (let [ocrfile (io/file filename)]
-    (->> (if (pdf-common/is-pdf? ocrfile)
-           ;; Get a sequence of images for PDFs
-           (get-pdf-content-as-images ocrfile)
-           ;; Read a single image for non-PDFs
-           [(ImageIO/read ocrfile)]) ; Wrap in a sequence for consistent handling
-         (map #(ocr/do-ocr % (ocr/set-language "eng"))) ; Process each image
-         (apply str)))) ; Combine OCR results into a single string
+(defn download-file-to-tmp
+  "Downloads the file temporary"
+  [filename]
+  (let [
+        temp-path (File/createTempFile (subs filename 0 (.lastIndexOf filename "."))
+                                       (subs filename (.lastIndexOf filename ".")))
+        temp-file (.getAbsoluteFile temp-path)
+        ]
+    (minio/download-object minio-connection minio-bucket filename temp-file)
+    (str temp-file)
+    ))
+
 
 
 
@@ -43,7 +82,10 @@
   "I don't do a whole lot ... yet."
   [& args]
   ;(ocr-utils/get-lang-data "eng")
+  (println minio-access-key minio-secret-key)
   (->>
-    (pdf-text/extract "resources/HelloWorld.pdf")
-    ;(get-pdf-content "resources/HelloWorld.png")
+    ;(minio/get-object minio-connection minio-bucket "9138730-FH_Campus_Bestaetigung_1.pdf")
+    ;(pdf-text/extract "resources/HelloWorld.pdf")
+    (download-file-to-tmp "9138730-FH_Campus_Bestaetigung_1.pdf")
+    (get-pdf-content-from-disk)
     (println)))

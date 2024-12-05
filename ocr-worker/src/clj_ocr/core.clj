@@ -1,3 +1,4 @@
+; epl license scottxtra https://github.com/ScottXTra/clj-ocr
 (ns clj-ocr.core
   (:require clj-ocr.utils
             [clojure.java.io :as io]
