@@ -1,6 +1,7 @@
 (ns clj-ocr.core
   (:require clj-ocr.utils
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [pdfboxing.text :as pdf])
   (:import
     [net.sourceforge.tess4j  ITesseract Tesseract]
     [javax.imageio ImageIO])

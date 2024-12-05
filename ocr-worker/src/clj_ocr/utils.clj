@@ -7,7 +7,7 @@
   "https://github.com/tesseract-ocr/tessdata/blob/master/")
 
 (def langs
-  ["ara" "asm" "eng" "afr"])
+  ["ara" "asm" "eng" "afr" "deu"])
 
 (defn get-lang-data [l]
   (with-open [in (io/input-stream (str "https://github.com/tesseract-ocr/tessdata/blob/master/" l ".traineddata?raw=true"))

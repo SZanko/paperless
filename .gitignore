@@ -2,6 +2,7 @@
 .direnv
 .idea/
 .env
+.run
 build/
 bin/
 container-data/elasticSearch
@@ -11,3 +12,4 @@ frontend/node_modules
 
 *.zip
 .~lock.*
+*.log
