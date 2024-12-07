@@ -1,4 +1,5 @@
 (ns minio
+  (:gen-class)
   (:require [clojure.java.io :as io]
             [clojure.string :as str])
   (:import [io.minio GetObjectArgs ListObjectsArgs MakeBucketArgs MinioClient PutObjectArgs RemoveBucketArgs RemoveObjectArgs Result StatObjectArgs StatObjectResponse]

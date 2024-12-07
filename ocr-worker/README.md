@@ -10,3 +10,8 @@ export LD_LIBRARY_PATH=paperless/.devenv/profile/lib
 export TESSDATA_PREFIX=paperless/ocr-worker/resources
 ```
 
+```shell
+lein uberjar
+docker build -t 
+```
+

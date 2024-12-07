@@ -84,8 +84,9 @@
   ;(ocr-utils/get-lang-data "eng")
   (println minio-access-key minio-secret-key)
   (->>
+    (str "Hello World")
     ;(minio/get-object minio-connection minio-bucket "9138730-FH_Campus_Bestaetigung_1.pdf")
     ;(pdf-text/extract "resources/HelloWorld.pdf")
-    (download-file-to-tmp "9138730-FH_Campus_Bestaetigung_1.pdf")
-    (get-pdf-content-from-disk)
+    ;(download-file-to-tmp "9138730-FH_Campus_Bestaetigung_1.pdf")
+    ;(get-pdf-content-from-disk)
     (println)))

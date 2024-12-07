@@ -79,6 +79,14 @@ services:
     networks:
       - paperless-network
 
+  ocr-worker:
+    build: ocr-worker
+    image: fhtw.at/swkom/ocr-worker:latest
+    depends_on:
+      - rest-api
+    networks:
+        - paperless-network
+
 networks:
   paperless-network:
     #driver: host

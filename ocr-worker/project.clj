@@ -8,6 +8,7 @@
                  [clojurewerkz/elastisch "3.0.1"]
                  [io.minio/minio "8.5.12"]
                  [pdfboxing "0.1.14"]
+                 [org.slf4j/slf4j-simple "2.0.16"]
                  [net.sourceforge.tess4j/tess4j "5.13.0"]]
   :main ^:skip-aot ocr-worker.core
   :target-path "target/%s"
