@@ -1,0 +1,170 @@
+{
+  "courseName" : "BIF5-SWKOM-WS24_L2L3",
+  "assignmentName" : "Sprint4",
+  "tasks" : [ {
+    "title" : "1.1 Provided Submission / Git Repo",
+    "className" : "CheckRepoUrlValid",
+    "maxGrade" : 2.0,
+    "withGrading" : true,
+    "parameters" : [ ]
+  }, {
+    "title" : "1.2 Extracted ZIP / Git clone",
+    "className" : "CheckRepoClone",
+    "maxGrade" : 3.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "overwriteExisting",
+      "value" : true
+    } ]
+  }, {
+    "title" : "2. Application Build ok (without tests)",
+    "className" : "CheckMavenBuild",
+    "maxGrade" : 15.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "skipTests",
+      "value" : true
+    }, {
+      "name" : "rebuildExisting",
+      "value" : false
+    } ]
+  }, {
+    "title" : "3.1 Static File Checks: docker-compose.yml",
+    "className" : "CheckSourceFiles",
+    "maxGrade" : 10.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "setRootPath",
+      "value" : "/"
+    }, {
+      "name" : "selectFile",
+      "value" : "docker-compose.yml"
+    }, {
+      "name" : "containsText",
+      "value" : "rabbitmq"
+    } ]
+  }, {
+    "title" : "3.2 Static Sourcecode Checks",
+    "className" : "CheckSourceFiles",
+    "maxGrade" : 30.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "setRootPath",
+      "value" : "/src/main/java"
+    }, {
+      "name" : "selectFile",
+      "value" : "RabbitMQConfig.java"
+    }, {
+      "name" : "containsText",
+      "value" : "@Configuration"
+    }, {
+      "name" : "containsText",
+      "value" : "\"OCR_QUEUE\""
+    }, {
+      "name" : "containsText",
+      "value" : "\"RESULT_QUEUE\""
+    }, {
+      "name" : "containsText",
+      "value" : "ConnectionFactory"
+    }, {
+      "name" : "containsText",
+      "value" : "RabbitTemplate"
+    }, {
+      "name" : "selectFileContainsText",
+      "value" : "RabbitMQConfig.OCR_QUEUE_NAME"
+    }, {
+      "name" : "containsText",
+      "value" : ".convertAndSend("
+    }, {
+      "name" : "selectFileContainsText",
+      "value" : "RabbitMQConfig.RESULT_QUEUE_NAME"
+    }, {
+      "name" : "containsText",
+      "value" : "documentRepository.save("
+    } ]
+  }, {
+    "title" : "4. Application Tests ok (Spring Boot Context)",
+    "className" : "CheckMavenBuild",
+    "maxGrade" : 10.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "skipTests",
+      "value" : false
+    }, {
+      "name" : "rebuildExisting",
+      "value" : false
+    } ]
+  }, {
+    "title" : "5. Component-Tests (docker compose up)",
+    "className" : "CheckDockerCompose",
+    "maxGrade" : 10.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "command",
+      "value" : "up"
+    }, {
+      "name" : "param",
+      "value" : "-d"
+    } ]
+  }, {
+    "title" : "5. Wait 60s for all containers to start",
+    "className" : "CheckWait",
+    "maxGrade" : 0.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "waitSeconds",
+      "value" : 60
+    } ]
+  }, {
+    "title" : "5.1 Rest-API POST http://localhost/api/documents/post_document",
+    "className" : "CheckHttpRequest",
+    "maxGrade" : 10.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "requestMethod",
+      "value" : "POST"
+    }, {
+      "name" : "baseUrl",
+      "value" : "http://localhost"
+    }, {
+      "name" : "requestEndpoint",
+      "value" : "/api/documents/post_document"
+    }, {
+      "name" : "requestContentString",
+      "value" : "Sprint4Document"
+    }, {
+      "name" : "requestContentFile",
+      "value" : "HelloWorld.pdf"
+    }, {
+      "name" : "responseStatusCodePattern",
+      "value" : "(2[0-9]{2})"
+    } ]
+  }, {
+    "title" : "5.2 WebSite GET http://localhost/",
+    "className" : "CheckHttpRequest",
+    "maxGrade" : 10.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "requestMethod",
+      "value" : "GET"
+    }, {
+      "name" : "baseUrl",
+      "value" : "http://localhost"
+    }, {
+      "name" : "requestEndpoint",
+      "value" : ""
+    }, {
+      "name" : "responseStatusCodePattern",
+      "value" : "(2[0-9]{2})"
+    } ]
+  }, {
+    "title" : "5.x Component-Tests done (docker compose down)",
+    "className" : "CheckDockerCompose",
+    "maxGrade" : 0.0,
+    "withGrading" : true,
+    "parameters" : [ {
+      "name" : "command",
+      "value" : "down"
+    } ]
+  } ]
+}
