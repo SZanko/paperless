@@ -84,8 +84,8 @@ services:
     ports:
       - "8081:8081"
     environment:
-      minioAccessKey: 9GwAvnkr8OIB5tl09xig
-      minioSecretKey: adU1Uf8UVmxHQtBHDrdBX6dzHqlRgvUlRdrMoKCG
+      minioAccessKey: ${minioAccessKey}
+      minioSecretKey: ${minioSecretKey}
       dbUrl: jdbc:postgresql://paperless-postgres-db-1:5432/postgres
       dbPasswd: postgresql
       dbUser: postgresql
