@@ -3,7 +3,14 @@
             [ocr-worker.core :refer :all])
   (:import (java.awt.image BufferedImage)))
 
-
+(deftest get-env-test
+  (testing "Sets Env and tries to get it"
+    (is (= "fallback" (get-env "TMP_ENV" "fallback")))
+    (System/setProperty "TMP_ENV" "env")
+    (is (= "env" (get-env "TMP_ENV" "fallback")))
+    )
+  (System/clearProperty "TMP_ENV")
+  )
 
 (deftest ocr-image-test
   (testing "Tries to run an ocr on an image"

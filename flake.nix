@@ -66,6 +66,7 @@
                     minio
                     leiningen
                     tesseract
+                    rabbitmq-server
                   ];
 
                   enterShell = ''

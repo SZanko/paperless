@@ -6,6 +6,12 @@
             [pdfboxing.text :as pdf-text]
             [pdfboxing.common :as pdf-common]
             [minio :as minio]
+            [clojure.data.json :as json]
+            [langohr.core :as rmq]
+            [langohr.queue :as lhq]
+            [langohr.channel   :as lch]
+            [langohr.consumers :as lc]
+            [langohr.basic     :as lb]
             )
   (:import (io.minio GetObjectArgs GetObjectResponse)
            (java.io ByteArrayInputStream ByteArrayOutputStream File FileInputStream FileOutputStream)
@@ -21,13 +27,16 @@
 (defn get-env
   "Retrieve an environment variable by name, or return the default value if not set."
   [env-name default-value]
-  (or (System/getenv env-name) default-value))
+  (or (System/getenv env-name) (System/getProperty env-name) default-value))
 
 (def rabbitmq-default-user (get-env "RABBITMQ_DEFAULT_USER" "rabbitmq_user"))
 (def rabbitmq-default-passwd (get-env "RABBITMQ_DEFAULT_PASS" "rabbitmq_passwd"))
-(def rabbitmq-default-host (get-env "RABBITMQ_DEFAULT_HOST" "paperless-rabbitmq-1"))
+(def rabbitmq-default-host (get-env "RABBITMQ_DEFAULT_HOST" "localhost"))
 (def rabbitmq-queue-input "files.input")
 (def rabbitmq-queue-output "files.content")
+(def elasticsearch-default-user (get-env "ELASTICSEARCH_DEFAULT_USER" "elasticsearchUser"))
+(def elasticsearch-default-passwd (get-env "ELASTICSEARCH_DEFAULT_PASS" "elastic_passwd"))
+(def elasticsearch-default-host (get-env "ELASTICSEARCH_DEFAULT_HOST" "http://localhost:9200"))
 (def minio-endpoint (get-env "minioEndpoint" "http://localhost:9000"))
 (def minio-access-key (get-env "minioAccessKey" "accessKey"))
 (def minio-secret-key (get-env "minioSecretKey" "secretKey"))
@@ -72,17 +81,59 @@
         temp-file (.getAbsoluteFile temp-path)
         ]
     (minio/download-object minio-connection minio-bucket filename temp-file)
-    (str temp-file)
     ))
 
 
+(defn create-output-json
+  "create a json with the filename and content of the file"
+  [filename content]
+  (json/write-str {:text content :minioFilename filename})
+  )
 
+(defn sent-content-back
+  "Sents the Content Back through rabbitmq"
+  [filename content]
+  (let [conn (rmq/connect {:host rabbitmq-default-host, :port 5672, :username rabbitmq-default-user, :vhost "/", :password rabbitmq-default-passwd}) ;; RabbitMQ connection URI
+        channel (rmq/create-channel conn)
+        queue rabbitmq-queue-output] ;; Define the queue name
+    (try
+      (lb/publish channel "" queue (create-output-json filename content))
+      (println (str "Message published to queue '" queue "': " (create-output-json filename content)))
+
+    ;; Cleanup resources
+      (finally
+        (.close channel)
+        (.close conn))
+    ))
+  )
+
+(defn receive-filename-send-content-back
+  "Callback function to handle received messages."
+  [channel metadata payload]
+  (download-file-to-tmp (str payload))
+  (println "Received message:" (str payload)))
+
+(defn start-listening
+  "Connect to RabbitMQ and listen to a queue indefinitely."
+  []
+  (let [conn    (rmq/connect {:host rabbitmq-default-host, :port 5672, :username rabbitmq-default-user, :vhost "/", :password rabbitmq-default-passwd}) ;; RabbitMQ connection URI
+        channel (rmq/create-channel conn)
+        queue   rabbitmq-queue-input] ;; Define the queue name
+    ;; Declare the queue (idempotent, won't recreate if it exists)
+    (lhq/declare channel queue {:durable true})
+    ;; Start consuming messages from the queue
+    (lc/subscribe channel queue receive-filename-send-content-back {:auto-ack true})
+    (println (str "Listening for messages on queue '" queue "'..."))
+    ;; Prevent the program from exiting
+    (Thread/sleep Long/MAX_VALUE)))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   ;(ocr-utils/get-lang-data "eng")
   (println minio-access-key minio-secret-key)
+  ;(start-listening)
+  (sent-content-back "Hello World" "Penis")
   (->>
     (str "Hello World")
     ;(minio/get-object minio-connection minio-bucket "9138730-FH_Campus_Bestaetigung_1.pdf")
