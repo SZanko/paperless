@@ -16,6 +16,7 @@
   (:import (io.minio GetObjectArgs GetObjectResponse)
            (java.io ByteArrayInputStream ByteArrayOutputStream File FileInputStream FileOutputStream)
            (java.nio.file Files)
+           (java.lang String)
            (java.nio.file.attribute FileAttribute)
            (javax.imageio ImageIO)
            (org.apache.pdfbox.pdmodel PDDocument)
@@ -81,6 +82,8 @@
         temp-file (.getAbsoluteFile temp-path)
         ]
     (minio/download-object minio-connection minio-bucket filename temp-file)
+    (println temp-file)
+    (str temp-file)
     ))
 
 
@@ -93,11 +96,12 @@
 (defn sent-content-back
   "Sents the Content Back through rabbitmq"
   [filename content]
+  (println filename content)
   (let [conn (rmq/connect {:host rabbitmq-default-host, :port 5672, :username rabbitmq-default-user, :vhost "/", :password rabbitmq-default-passwd}) ;; RabbitMQ connection URI
         channel (rmq/create-channel conn)
         queue rabbitmq-queue-output] ;; Define the queue name
     (try
-      (lhq/declare channel queue {:durable true})
+      ;(lhq/declare channel queue {:durable true})
       (lb/publish channel "" queue (create-output-json filename content))
       (println (str "Message published to queue '" queue "': " (create-output-json filename content)))
 
@@ -111,8 +115,13 @@
 (defn receive-filename-send-content-back
   "Callback function to handle received messages."
   [channel metadata payload]
-  (download-file-to-tmp (str payload))
-  (println "Received message:" (str payload)))
+  (let [filename (String. payload "UTF-8")]
+    (println "Received message:" filename)
+    (->> (download-file-to-tmp filename)
+         (get-pdf-content-from-disk)
+         (sent-content-back filename)
+         )
+  ))
 
 (defn start-listening
   "Connect to RabbitMQ and listen to a queue indefinitely."
@@ -121,7 +130,7 @@
         channel (rmq/create-channel conn)
         queue   rabbitmq-queue-input] ;; Define the queue name
     ;; Declare the queue (idempotent, won't recreate if it exists)
-    (lhq/declare channel queue {:durable true})
+    ;(lhq/declare channel queue {:durable true})
     ;; Start consuming messages from the queue
     (lc/subscribe channel queue receive-filename-send-content-back {:auto-ack true})
     (println (str "Listening for messages on queue '" queue "'..."))
@@ -133,12 +142,13 @@
   [& args]
   ;(ocr-utils/get-lang-data "eng")
   (println minio-access-key minio-secret-key)
-  ;(start-listening)
-  (sent-content-back "Hello World" "Penis")
-  (->>
-    (str "Hello World")
+  (start-listening)
+  ;(sent-content-back "Hello World" "Penis")
+  ;(->>
+    ;(str "Hello World")
     ;(minio/get-object minio-connection minio-bucket "9138730-FH_Campus_Bestaetigung_1.pdf")
     ;(pdf-text/extract "resources/HelloWorld.pdf")
     ;(download-file-to-tmp "9138730-FH_Campus_Bestaetigung_1.pdf")
     ;(get-pdf-content-from-disk)
-    (println)))
+    ;(println))
+  )
