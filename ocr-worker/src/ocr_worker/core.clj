@@ -97,6 +97,7 @@
         channel (rmq/create-channel conn)
         queue rabbitmq-queue-output] ;; Define the queue name
     (try
+      (lhq/declare channel queue {:durable true})
       (lb/publish channel "" queue (create-output-json filename content))
       (println (str "Message published to queue '" queue "': " (create-output-json filename content)))
 

@@ -2,7 +2,11 @@
   (:require [clojure.test :refer :all]
             [ocr-worker.core :refer :all])
   (:import (java.awt.image BufferedImage)))
+; integration tests
+(deftest sent-content-back-test
+  (testing "Sents a test message "))
 
+; unit tests
 (deftest get-env-test
   (testing "Sets Env and tries to get it"
     (is (= "fallback" (get-env "TMP_ENV" "fallback")))
