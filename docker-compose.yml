@@ -108,8 +108,8 @@ services:
     networks:
       - paperless-network
 
-  ocr-worker:
-    build: ocr-worker
+  workers:
+    build: workers
     image: fhtw.at/swkom/ocr-worker:latest
     depends_on:
       - rest-api
