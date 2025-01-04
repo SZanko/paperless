@@ -11,10 +11,25 @@ export default function SearchDocuments() {
         <div className="action">
             <h3>Search Documents</h3>
             <input
+                id="title"
                 type="text"
-                value={searchQuery}
+                value={searchQuery.title}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search Query"
+                placeholder="Search by Title"
+            />
+            <input
+                id="author"
+                type="text"
+                value={searchQuery.author}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by Author"
+            />
+            <input
+                id="content"
+                type="text"
+                value={searchQuery.content}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by Content"
             />
             <button onClick={handleSearch}>Search</button>
         </div>
