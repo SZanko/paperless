@@ -10,8 +10,10 @@
             [langohr.core :as rmq]
             [langohr.queue :as lhq]
             [langohr.channel   :as lch]
+            [clj-http.client :as http]
             [langohr.consumers :as lc]
             [langohr.basic     :as lb]
+            ;[qbits.spandex     :as spandex]
             )
   (:import (io.minio GetObjectArgs GetObjectResponse)
            (java.io ByteArrayInputStream ByteArrayOutputStream File FileInputStream FileOutputStream)
@@ -37,7 +39,9 @@
 (def rabbitmq-queue-output "files.content")
 (def elasticsearch-default-user (get-env "ELASTICSEARCH_DEFAULT_USER" "elasticsearchUser"))
 (def elasticsearch-default-passwd (get-env "ELASTICSEARCH_DEFAULT_PASS" "elastic_passwd"))
+(def elasticsearch-ocr-index-name (get-env "ELASTICSEARCH_DEFAULT_OCR_INDEX" "ocr"))
 (def elasticsearch-default-host (get-env "ELASTICSEARCH_DEFAULT_HOST" "http://localhost:9200"))
+;(def elasticsearch-client (spandex/client))
 (def minio-endpoint (get-env "minioEndpoint" "http://localhost:9000"))
 (def minio-access-key (get-env "minioAccessKey" "accessKey"))
 (def minio-secret-key (get-env "minioSecretKey" "secretKey"))
@@ -93,8 +97,48 @@
   (json/write-str {:text content :minioFilename filename})
   )
 
-(defn sent-content-back
-  "Sents the Content Back through rabbitmq"
+(defn create-index
+  "creates an index with pure http"
+  [host index-name]
+  (try
+    (let [url (str host "/" index-name)
+          response (http/put url
+                             {:headers {"Content-Type" "application/json"}
+                              :body "{}"})]
+      (println "Index created successfully:" (:body response)))
+    (catch Exception e
+      (println "Error:" (.getMessage e)))))
+
+
+;(defn create-index-with-mapping
+;  [client index-name mapping]
+;  (spandex/request client
+;           {:method :put
+;            :url (str "/" index-name)
+;            :headers {"Content-Type" "application/json"}
+;            :body (json/write-str mapping)}))
+;
+;(defn send-content-elastic
+;  "Send the content to elastic search"
+;  [^String content]
+;  (spandex/request elasticsearch-client {:method :post :url elasticsearch-ocr-url})
+;  )
+
+
+(defn send-content-elastic
+  "Send the content to elastic search"
+  [host index-name doc-id content-json]
+  (try
+    (let [url (str host "/" index-name "/_doc/" doc-id)
+          response (http/post url
+                              {:headers {"Content-Type" "application/json"}
+                               :body content-json})]
+      (println "Document posted successfully:" (:body response)))
+    (catch Exception e
+      (println "Error:" (.getMessage e)))))
+
+(defn send-content-rabbitmq
+  "Sends the Content Back through rabbitmq"
   [filename content]
   (println filename content)
   (let [conn (rmq/connect {:host rabbitmq-default-host, :port 5672, :username rabbitmq-default-user, :vhost "/", :password rabbitmq-default-passwd}) ;; RabbitMQ connection URI
@@ -117,10 +161,11 @@
   [channel metadata payload]
   (let [filename (String. payload "UTF-8")]
     (println "Received message:" filename)
-    (->> (download-file-to-tmp filename)
-         (get-pdf-content-from-disk)
-         (sent-content-back filename)
-         )
+    (let [content (->> (download-file-to-tmp filename)
+                       (get-pdf-content-from-disk))]
+      (send-content-rabbitmq filename content)
+      (send-content-elastic elasticsearch-default-host elasticsearch-ocr-index-name filename (create-output-json filename content))
+      )
   ))
 
 (defn start-listening
