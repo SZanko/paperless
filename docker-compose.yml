@@ -51,16 +51,16 @@ services:
     ports: 
       - "9200:9200"
     environment:
-      ELASTIC_PASSWORD: elastic_passwd
-      http.port: 9200
-      http.cors.enabled: true
-      http.cors.allow-origin: \*
-      http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
-      http.cors.allow-credentials: true
-      network.publish_host: localhost
-      xpack.security.enabled: false
-      discovery.type: single-node
-      http.max_content_length: 10MB
+      - ELASTIC_PASSWORD=elastic_passwd
+      - http.port=9200
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:9092
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+      - network.publish_host=localhost
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - http.max_content_length=10MB
     volumes:
       - ./container-data/elasticSearch:/usr/share/elasticsearch/data
     networks:
@@ -93,6 +93,8 @@ services:
       RABBITMQ_DEFAULT_USER: rabbitmq_user
       RABBITMQ_DEFAULT_PASS: rabbitmq_passwd
       RABBITMQ_DEFAULT_HOST: paperless-rabbitmq-1
+      ELASTICSEARCH_HOST: paperless-elasticsearch-1
+      ELASTICSEARCH_PORT: 9200
     networks:
       - paperless-network
 
