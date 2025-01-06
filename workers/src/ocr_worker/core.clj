@@ -128,6 +128,7 @@
 (defn send-content-elastic
   "Send the content to elastic search"
   [host index-name doc-id content-json]
+  (create-index elasticsearch-default-host elasticsearch-ocr-index-name)
   (try
     (let [url (str host "/" index-name "/_doc/" doc-id)
           response (http/post url
