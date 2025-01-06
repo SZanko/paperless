@@ -126,6 +126,7 @@ services:
       RABBITMQ_DEFAULT_PASS: rabbitmq_passwd
       RABBITMQ_DEFAULT_HOST: paperless-rabbitmq-1
       TESSDATA_PREFIX: /usr/share/tessdata/
+      ELASTICSEARCH_DEFAULT_HOST: http://paperless-elasticsearch-1:9200
 
 
 networks:
