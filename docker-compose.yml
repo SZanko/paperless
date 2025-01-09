@@ -45,6 +45,11 @@ services:
       RABBITMQ_DEFAULT_PASS: rabbitmq_passwd
     networks:
       - paperless-network
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
@@ -112,7 +117,10 @@ services:
     build: workers
     image: fhtw.at/swkom/ocr-worker:latest
     depends_on:
-      - rest-api
+      rest-api:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
     networks:
         - paperless-network
     environment:
