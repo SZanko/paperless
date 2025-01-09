@@ -46,14 +46,29 @@ export default function SearchDocuments() {
             />
             <button onClick={handleSearch}>Search</button>
 
-            <div className="results">
-                {searchResults.map((doc) => (
-                    <div key={doc.id} className="document-item">
-                        <h4>{doc.title}</h4>
-                        <p>{doc.content}</p>
-                    </div>
-                ))}
-            </div>
+            {searchResults.length > 0 && (
+                <div className="results">
+                    <table className="min-w-full">
+                        <thead>
+                        <tr className="border-b">
+                            <th className="text-left p-2">Title</th>
+                            <th className="text-left p-2">Content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {searchResults.map((doc) => (
+                            <tr key={doc.id} className="border-b hover:bg-gray-50">
+                                <td className="p-2 text-sm">{doc.title}</td>
+                                <td className="p-2">
+                                    {doc.content?.substring(0, 250)}
+                                    {doc.content?.length > 250 ? "..." : ""}
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 }
