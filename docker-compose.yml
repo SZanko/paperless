@@ -54,7 +54,7 @@ services:
       ELASTIC_PASSWORD: elastic_passwd
       http.port: 9200
       http.cors.enabled: true
-      http.cors.allow-origin: \*
+      http.cors.allow-origin: "http://localhost:8080,http://localhost:9092"
       http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
       http.cors.allow-credentials: true
       network.publish_host: localhost
