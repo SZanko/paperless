@@ -7,6 +7,7 @@ import at.fhtw.swkom.paperless.persistence.repositories.DocumentRepository;
 import io.minio.errors.*;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -76,4 +77,27 @@ public class DocumentService {
         final Optional<DocumentModel> model = documentRepository.findById(toBeSaved.getId());
         return model.map(mapper::toDto);
     }
+
+
+    public Optional<Document> updateDocument(Integer id, String author, String title) {
+        // Check if document exists
+        Optional<DocumentModel> existingDocument = documentRepository.findById(id);
+        if (existingDocument.isEmpty()) {
+            log.severe("Document not found for updating with id: " + id);
+            return Optional.empty();
+        }
+
+        // Update metadata
+        DocumentModel documentToUpdate = existingDocument.get();
+        documentToUpdate.setTitle(title);
+        documentToUpdate.setAuthor(author);
+
+        // Save first
+        documentRepository.save(documentToUpdate);
+
+        // Then fetch the updated document from DB (like in create method)
+        final Optional<DocumentModel> updatedModel = documentRepository.findById(id);
+        return updatedModel.map(mapper::toDto);
+    }
+
 }

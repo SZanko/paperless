@@ -15,4 +15,5 @@ public interface DocumentRepository extends PagingAndSortingRepository<DocumentM
     @Modifying
     @Query("update DocumentModel d set d.content = ?1 where d.content is null and d.fileNameBucket like ?2")
     int updateContentByContentNullAndFileNameBucketLike(@NonNull String content, @NonNull String fileNameBucket);
+
 }

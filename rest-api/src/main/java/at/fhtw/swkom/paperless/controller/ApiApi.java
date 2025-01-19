@@ -260,7 +260,7 @@ public interface ApiApi {
                 }
             }
         });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
