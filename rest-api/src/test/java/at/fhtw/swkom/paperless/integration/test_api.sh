@@ -9,21 +9,25 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Function to print test results
-print_result() {
-    local response=$1
-    local test_name=$2
-    local http_code=${response: -3}
-    local response_body=${response:0:(-3)}
+check_status() {
+    local test_name=$1
+    local expected_code=$2
+    local curl_command=$3
+
+    echo -e "\nTesting: $test_name"
+
+    # Run curl command and capture both response and status code
+    local response=$(eval "$curl_command -s -w '\n%{http_code}' 2>&1")
+    local status_code=$(echo "$response" | tail -n1)
+    local response_body=$(echo "$response" | sed '$d')
 
     echo "Response body: $response_body"
-    echo "HTTP Code: $http_code"
+    echo "Status code: $status_code"
 
-    if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+    if [ "$status_code" = "$expected_code" ]; then
         echo -e "${GREEN}✓ $test_name passed${NC}"
-        return 0
     else
-        echo -e "${RED}✗ $test_name failed${NC}"
-        return 1
+        echo -e "${RED}✗ $test_name failed (Expected: $expected_code, Got: $status_code)${NC}"
     fi
 }
 
@@ -40,20 +44,40 @@ fi
 
 # Test 1: Create new document
 echo -e "\nTesting POST /documents/post_document"
-CREATE_RESPONSE=$(curl -v -X POST \
-    -H "Content-Type: multipart/form-data" \
-    -F "author=Test Author" \
-    -F "title=Test Document" \
-    -F "file=@src/test/resources/HelloWorld.pdf" \
-    $BASE_URL/documents/post_document 2>&1)
-
-echo "Full curl response:"
-echo "$CREATE_RESPONSE"
+create_cmd="curl -X POST \
+    -H 'Content-Type: multipart/form-data' \
+    -F 'author=Test Author 1' \
+    -F 'title=Test Document 1' \
+    -F 'file=@src/test/resources/HelloWorld.pdf' \
+    $BASE_URL/documents/post_document"
+check_status "Create document" "201" "$create_cmd"
 
 # Test 2: Get all documents
 echo -e "\nTesting GET /documents"
-GET_ALL_RESPONSE=$(curl -v $BASE_URL/documents 2>&1)
-echo "$GET_ALL_RESPONSE"
+check_status "Get all documents" "200" "curl $BASE_URL/documents"
+
+# Test 3: Get document by ID
+echo -e "\nTesting GET /documents/{id}"
+check_status "Get specific document" "200" "curl $BASE_URL/documents/2"
+
+# Test 4: Update document metadata
+echo -e "\nTesting PUT /documents/{id}"
+update_cmd="curl -X PUT \
+    -H 'Content-Type: multipart/form-data' \
+    -F 'author=Updated Author' \
+    -F 'title=Updated Title' \
+    -F 'file=@src/test/resources/HelloWorld.pdf' \
+    $BASE_URL/documents/2"
+check_status "Update document" "200" "$update_cmd"
+
+# Test 5: Search documents
+echo -e "\nTesting GET /documents/search"
+check_status "Search documents" "200" "curl $BASE_URL/documents/search"
+
+# Test 6: Delete document
+echo -e "\nTesting DELETE /documents/{id}"
+check_status "Delete document" "204" "curl -X DELETE $BASE_URL/documents/2"
 
 # Print summary
 echo -e "\nAPI Integration Tests Completed!"
+echo "Tests completed at: $(date)"
