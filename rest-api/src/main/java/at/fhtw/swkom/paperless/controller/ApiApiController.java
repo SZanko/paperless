@@ -2,6 +2,7 @@ package at.fhtw.swkom.paperless.controller;
 
 
 import at.fhtw.swkom.paperless.services.DocumentService;
+import at.fhtw.swkom.paperless.services.ElasticSearchService;
 import at.fhtw.swkom.paperless.services.dto.Document;
 import jakarta.inject.Inject;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import jakarta.validation.constraints.*;
 import jakarta.validation.Valid;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +34,8 @@ public class ApiApiController implements ApiApi {
     private final NativeWebRequest request;
 
     private final DocumentService documentService;
+
+    private final ElasticSearchService elasticSearchService;
 
     @Override
     public Optional<NativeWebRequest> getRequest() {
@@ -75,13 +79,16 @@ public class ApiApiController implements ApiApi {
     }
 
     @Override
-    public ResponseEntity<List<Document>> searchDocumentContent() {
-        Integer id = 1;
-        final Optional<Document> found = documentService.findById(id);
-        if(found.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<Document>> searchDocumentContent(@RequestBody String searchText) {
+        //log.info("Received search query: " + query);  // Add this log
+
+        List<Document> results = elasticSearchService.searchDocuments(searchText);
+        //log.info("Search results: " + results);  // Add this log
+
+        if (results.isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList());
         }
-        return ApiApi.super.searchDocumentContent();
+        return ResponseEntity.ok(results);
     }
 
     @Override

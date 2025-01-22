@@ -61,6 +61,12 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:$mapstruct")
 	annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct")
 	implementation("io.minio:minio:$minio")
+	implementation("co.elastic.clients:elasticsearch-java:8.12.0")
+	implementation("org.elasticsearch.client:elasticsearch-rest-client:8.12.0")
+	implementation("org.elasticsearch.client:elasticsearch-rest-client-sniffer:8.12.0")
+	implementation("jakarta.json:jakarta.json-api:2.1.3")
+	implementation("org.apache.httpcomponents:httpcore:4.4.16")
+	implementation("org.apache.httpcomponents:httpclient:4.5.14")
 }
 
 hibernate {

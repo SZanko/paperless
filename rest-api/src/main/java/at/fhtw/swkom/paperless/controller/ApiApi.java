@@ -196,24 +196,22 @@ public interface ApiApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/api/documents/search",
-        produces = { "application/json" }
+            method = RequestMethod.POST,
+            value = "/api/documents/search",
+            produces = { "application/json" }
     )
     
-    default ResponseEntity<List<Document>> searchDocumentContent(
-        
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }, { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    default ResponseEntity<List<Document>> searchDocumentContent(String searchText) {
+//        getRequest().ifPresent(request -> {
+//            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+//                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+//                    String exampleString = "[ { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" }, { \"minioFilePath\" : \"minioFilePath\", \"author\" : \"author\", \"created\" : \"created\", \"id\" : 0, \"title\" : \"title\", \"content\" : \"content\" } ]";
+//                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+//                    break;
+//                }
+//            }
+//        });
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 

@@ -59,7 +59,7 @@ services:
       ELASTIC_PASSWORD: elastic_passwd
       http.port: 9200
       http.cors.enabled: true
-      http.cors.allow-origin: "http://localhost:8080,http://localhost:9092"
+      http.cors.allow-origin: "http://localhost:8080,http://localhost:9092,http://localhost:8081"
       http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
       http.cors.allow-credentials: true
       network.publish_host: localhost
@@ -98,6 +98,7 @@ services:
       RABBITMQ_DEFAULT_USER: rabbitmq_user
       RABBITMQ_DEFAULT_PASS: rabbitmq_passwd
       RABBITMQ_DEFAULT_HOST: paperless-rabbitmq-1
+      ELASTICSEARCH_DEFAULT_HOST: http://paperless-elasticsearch-1:9200
     networks:
       - paperless-network
 
