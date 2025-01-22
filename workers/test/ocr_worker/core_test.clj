@@ -11,10 +11,13 @@
   (testing "Sets Env and tries to get it"
     (is (= "fallback" (get-env "TMP_ENV" "fallback")))
     (System/setProperty "TMP_ENV" "env")
-    (is (= "env" (get-env "TMP_ENV" "fallback")))
-    )
-  (System/clearProperty "TMP_ENV")
-  )
+    (is (= "env" (get-env "TMP_ENV" "fallback"))))
+
+  (System/clearProperty "TMP_ENV"))
+
+(deftest create-output-json-test
+  (testing ("Create output json"
+             )))
 
 (deftest ocr-image-test
   (testing "Tries to run an ocr on an image"

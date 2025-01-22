@@ -12,6 +12,7 @@
                  [org.slf4j/slf4j-simple "2.0.16"]
                  [cc.qbits/spandex "0.8.2"]
                  [net.sourceforge.tess4j/tess4j "5.13.0"]]
+  :plugins [[lein-cloverage "1.2.2"]]
   :main ^:skip-aot ocr-worker.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all

@@ -2,7 +2,8 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
 	java
-	id("org.springframework.boot") version "3.4.0"
+    jacoco
+	id("org.springframework.boot") version "3.4.1"
 	id("io.spring.dependency-management") version "1.1.6"
 	id("org.hibernate.orm") version "6.5.3.Final"
 	id("io.freefair.lombok") version "8.10.2"
@@ -27,6 +28,20 @@ configurations {
 tasks.named<BootBuildImage>("bootBuildImage") {
 	imageName.set("fhtw.at/swkom/${project.name}")
 }
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
+}
+
+
 
 
 val jakartaServlet = "6.1.0"

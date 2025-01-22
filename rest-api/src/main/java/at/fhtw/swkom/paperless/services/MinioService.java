@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 @Log
@@ -31,16 +32,16 @@ public class MinioService {
 
 
     private String getValidFileName(@Nonnull MultipartFile file) {
-        if(file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
             return file.getOriginalFilename();
-        }else {
+        } else {
             return file.getName();
         }
     }
 
     public String uploadFile(MultipartFile file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         final int tenMB = 10 * 1024 * 1024;
-        final String newFileName = random.nextInt(tenMB) + "-" + getValidFileName(file);
+        final String newFileName = UUID.randomUUID() + getValidFileName(file);
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)

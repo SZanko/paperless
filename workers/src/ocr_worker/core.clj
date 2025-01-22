@@ -12,9 +12,9 @@
             [langohr.channel   :as lch]
             [clj-http.client :as http]
             [langohr.consumers :as lc]
-            [langohr.basic     :as lb]
+            [langohr.basic     :as lb])
             ;[qbits.spandex     :as spandex]
-            )
+
   (:import (io.minio GetObjectArgs GetObjectResponse)
            (java.io ByteArrayInputStream ByteArrayOutputStream File FileInputStream FileOutputStream)
            (java.nio.file Files)
@@ -83,19 +83,19 @@
   (let [
         temp-path (File/createTempFile (subs filename 0 (.lastIndexOf filename "."))
                                        (subs filename (.lastIndexOf filename ".")))
-        temp-file (.getAbsoluteFile temp-path)
-        ]
+        temp-file (.getAbsoluteFile temp-path)]
+
     (minio/download-object minio-connection minio-bucket filename temp-file)
     (println temp-file)
-    (str temp-file)
-    ))
+    (str temp-file)))
+
 
 
 (defn create-output-json
   "create a json with the filename and content of the file"
   [filename content]
-  (json/write-str {:text content :minioFilename filename})
-  )
+  (json/write-str {:text content :minioFilename filename}))
+
 
 (defn create-index
   "creates an index with pure http"
@@ -153,9 +153,9 @@
     ;; Cleanup resources
       (finally
         (.close channel)
-        (.close conn))
-    ))
-  )
+        (.close conn)))))
+
+
 
 (defn receive-filename-send-content-back
   "Callback function to handle received messages."
@@ -165,9 +165,9 @@
     (let [content (->> (download-file-to-tmp filename)
                        (get-pdf-content-from-disk))]
       (send-content-rabbitmq filename content)
-      (send-content-elastic elasticsearch-default-host elasticsearch-ocr-index-name filename (create-output-json filename content))
-      )
-  ))
+      (send-content-elastic elasticsearch-default-host elasticsearch-ocr-index-name filename (create-output-json filename content)))))
+
+
 
 (defn start-listening
   "Connect to RabbitMQ and listen to a queue indefinitely."
@@ -188,7 +188,7 @@
   [& args]
   ;(ocr-utils/get-lang-data "eng")
   (println minio-access-key minio-secret-key)
-  (start-listening)
+  (start-listening))
   ;(sent-content-back "Hello World" "Penis")
   ;(->>
     ;(str "Hello World")
@@ -197,4 +197,4 @@
     ;(download-file-to-tmp "9138730-FH_Campus_Bestaetigung_1.pdf")
     ;(get-pdf-content-from-disk)
     ;(println))
-  )
+
