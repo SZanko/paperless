@@ -49,7 +49,7 @@ public class DocumentDtoBuilder {
     }
 
     public Document build() {
-        Document document = new Document(title);  // Required field constructor
+        Document document = new Document(title);
         document.setId(this.id);
         document.setAuthor(this.author);
         document.setCreated(this.created);

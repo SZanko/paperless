@@ -53,43 +53,41 @@ class ApiApiControllerTest {
 
     @Test
     void deleteDocument_Success() {
-        // Arrange
+
         Integer documentId = 1;
         when(documentService.findById(documentId)).thenReturn(Optional.of(testDocument));
         doNothing().when(documentService).deleteById(documentId);
 
-        // Act
+
         ResponseEntity<Void> response = apiController.deleteDocument(documentId);
 
-        // Assert
+
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(documentService).deleteById(documentId);
     }
 
     @Test
     void deleteDocument_NotFound() {
-        // Arrange
+
         Integer documentId = 999;
         when(documentService.findById(documentId)).thenReturn(Optional.empty());
 
-        // Act
+
         ResponseEntity<Void> response = apiController.deleteDocument(documentId);
 
-        // Assert
+
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(documentService, never()).deleteById(documentId);
     }
 
     @Test
     void getDocument_Success() {
-        // Arrange
+
         Integer documentId = 1;
         when(documentService.findById(documentId)).thenReturn(Optional.of(testDocument));
 
-        // Act
         ResponseEntity<Document> response = apiController.getDocument(documentId);
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         //assertEquals(documentId, response.getBody().getId());
@@ -97,20 +95,16 @@ class ApiApiControllerTest {
 
     @Test
     void getDocument_NotFound() {
-        // Arrange
         Integer documentId = 999;
         when(documentService.findById(documentId)).thenReturn(Optional.empty());
 
-        // Act
         ResponseEntity<Document> response = apiController.getDocument(documentId);
 
-        // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
     void getDocuments_Success() {
-        // Arrange
         List<Document> documents = Arrays.asList(
                 testDocument,
                 new Document()
@@ -120,10 +114,8 @@ class ApiApiControllerTest {
         );
         when(documentService.findAll()).thenReturn(documents);
 
-        // Act
         ResponseEntity<List<Document>> response = apiController.getDocuments();
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(2, response.getBody().size());
@@ -131,16 +123,13 @@ class ApiApiControllerTest {
 
     @Test
     void postDocument_Success() {
-        // Arrange
         String author = "Test Author";
         String title = "Test Title";
         when(documentService.create(eq(author), eq(title), any(MockMultipartFile.class)))
                 .thenReturn(Optional.ofNullable(testDocument));
 
-        // Act
         ResponseEntity<Void> response = apiController.postDocument(author, title, testFile);
 
-        // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(documentService).create(author, title, testFile);
     }
@@ -149,12 +138,10 @@ class ApiApiControllerTest {
 
     @Test
     void updateMetaData_DocumentNotFound() {
-        // Arrange
         Integer documentId = 999;
         String newTitle = "Updated Title";
         when(documentService.findById(documentId)).thenReturn(Optional.empty());
 
-        // Act
         ResponseEntity<Document> response = apiController.updateMetaData(
                 documentId,
                 newTitle,
@@ -162,7 +149,6 @@ class ApiApiControllerTest {
                 null
         );
 
-        // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(documentService, never()).updateDocument(any(), any(), any());
     }

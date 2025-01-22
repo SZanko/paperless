@@ -21,12 +21,12 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue ocrWorkerOutputQueue() {
-        return new Queue(ocrWorkerOutputQueueName, true); // Durable queue
+        return new Queue(ocrWorkerOutputQueueName, true);
     }
 
     @Bean
     public Queue ocrWorkerInputQueue() {
-        return new Queue(ocrWorkerInputQueueNAME, true); // Durable queue
+        return new Queue(ocrWorkerInputQueueNAME, true);
     }
 
 

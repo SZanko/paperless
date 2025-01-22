@@ -30,27 +30,27 @@ public class MessageListener {
     public void receiveFilename(String content, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
         final OCRMessage ocrMessage;
         try {
-            // Attempt to parse the message
+
             ocrMessage = objectMapper.readValue(content, OCRMessage.class);
             log.info("OCR message received: " + ocrMessage);
 
-            // Acknowledge the message on success
+
             channel.basicAck(tag, false);
             int result = documentRepository.updateContentByContentNullAndFileNameBucketLike(ocrMessage.getText(), ocrMessage.getMinioFilename());
             log.info("Result of Update of content: " + result);
         } catch (JsonProcessingException e) {
             log.severe("Failed to parse OCR message. Content: " + content + " " + Arrays.toString(e.getStackTrace()));
 
-            // Move the unparseable message to the dead-letter queue
+
             try {
-                channel.basicNack(tag, false, false); // Do not requeue the message
+                channel.basicNack(tag, false, false);
             } catch (IOException ioException) {
                 log.severe("Failed to nack message: " + ioException.getMessage() + " " + ioException);
             }
         } catch (Exception e) {
             log.severe("Unexpected error occurred " + e);
 
-            // Requeue the message for retry in case of other errors
+
             try {
                 channel.basicNack(tag, false, true);
             } catch (IOException ioException) {

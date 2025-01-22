@@ -80,22 +80,18 @@ public class DocumentService {
 
 
     public Optional<Document> updateDocument(Integer id, String author, String title) {
-        // Check if document exists
         Optional<DocumentModel> existingDocument = documentRepository.findById(id);
         if (existingDocument.isEmpty()) {
             log.severe("Document not found for updating with id: " + id);
             return Optional.empty();
         }
 
-        // Update metadata
         DocumentModel documentToUpdate = existingDocument.get();
         documentToUpdate.setTitle(title);
         documentToUpdate.setAuthor(author);
 
-        // Save first
         documentRepository.save(documentToUpdate);
 
-        // Then fetch the updated document from DB (like in create method)
         final Optional<DocumentModel> updatedModel = documentRepository.findById(id);
         return updatedModel.map(mapper::toDto);
     }

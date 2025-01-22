@@ -56,7 +56,6 @@ public class DocumentServiceUnitTest {
 
         Optional<Document> result = documentService.findById(testId);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(expectedDocument, result.get());
         verify(documentRepository).findById(testId);
@@ -64,24 +63,19 @@ public class DocumentServiceUnitTest {
 
     @Test
     void findById_whenIdIsNull() {
-        // Act
         Optional<Document> result = documentService.findById(null);
 
-        // Assert
         assertTrue(result.isEmpty());
         verify(documentRepository, never()).findById(any());
     }
 
     @Test
     void findById_whenIdNotExists() {
-        // Arrange
         Integer testId = 999;
         when(documentRepository.findById(testId)).thenReturn(Optional.empty());
 
-        // Act
         Optional<Document> result = documentService.findById(testId);
 
-        // Assert
         assertTrue(result.isEmpty());
         verify(documentRepository).findById(testId);
     }
@@ -89,7 +83,6 @@ public class DocumentServiceUnitTest {
 
     @Test
     void updateDocument_whenDocumentExists_shouldUpdateMetadata() {
-        // Arrange
         Integer testId = 1;
         String newAuthor = "New Author";
         String newTitle = "New Title";
@@ -103,10 +96,8 @@ public class DocumentServiceUnitTest {
         when(documentRepository.findById(testId)).thenReturn(Optional.of(existingDocument));
         when(documentMapper.toDto(existingDocument)).thenReturn(expectedDocument);
 
-        // Act
         Optional<Document> result = documentService.updateDocument(testId, newAuthor, newTitle);
 
-        // Assert
         assertTrue(result.isPresent());
         verify(documentRepository).save(existingDocument);
         assertEquals(newAuthor, existingDocument.getAuthor());
@@ -115,17 +106,14 @@ public class DocumentServiceUnitTest {
 
     @Test
     void updateDocument_whenDocumentNotExists_shouldReturnEmptyOptional() {
-        // Arrange
         Integer testId = 999;
         String newAuthor = "New Author";
         String newTitle = "New Title";
 
         when(documentRepository.findById(testId)).thenReturn(Optional.empty());
 
-        // Act
         Optional<Document> result = documentService.updateDocument(testId, newAuthor, newTitle);
 
-        // Assert
         assertTrue(result.isEmpty());
         verify(documentRepository, never()).save(any());
     }
