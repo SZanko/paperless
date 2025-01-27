@@ -3,6 +3,7 @@ package at.fhtw.swkom.paperless.persistence.entities;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -23,6 +24,7 @@ public class DocumentModel {
     private String title;
     private String author;
     private String created;
+    @Size(max = 5000)
     private String content;
     @Nonnull
     @NotNull
